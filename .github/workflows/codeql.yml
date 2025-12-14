@@ -1,0 +1,70 @@
+name: 🚨 Security Scan
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  codeql:
+    name: 📊 CodeQL Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ["cpp", "c", "rust", "python", "go", "javascript"]
+          queries: "security-code-scanning-default"
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  gitleaks:
+    name: 🔍 Gitleaks Secret Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Gitleaks
+        run: |
+          curl -sfL https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks_linux_amd64.tar.gz | tar xz
+          ./gitleaks detect --verbose --report-format json --report-path gitleaks-report.json
+
+      - name: Upload Gitleaks report
+        uses: actions/upload-artifact@v3
+        with:
+          name: gitleaks-report
+          path: gitleaks-report.json
+
+  trivy:
+    name: 🧪 Trivy Dependency Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Run Trivy
+        run: |
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+
+      - name: Upload Trivy Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-results
+          path: trivy-report.txt
