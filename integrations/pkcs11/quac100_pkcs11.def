@@ -1,0 +1,241 @@
+; =============================================================================
+; QUAC 100 PKCS#11 Module - Windows Module Definition File
+; =============================================================================
+;
+; File: quac100_pkcs11.def
+; Purpose: Export definitions for Windows DLL build
+;
+; This file defines the exported functions for the QUAC 100 PKCS#11 module.
+; PKCS#11 (Cryptoki) requires specific entry points that applications use
+; to load and interact with cryptographic tokens.
+;
+; Usage:
+;   cl /LD /DEF:quac100_pkcs11.def quac100_pkcs11*.c ^
+;      /link /LIBPATH:path\to\openssl lib\libcrypto.lib
+;
+; Or with CMake:
+;   cmake -G "Visual Studio 17 2022" ..
+;   cmake --build . --config Release
+;
+; Copyright 2025 Dyber, Inc. All Rights Reserved.
+; =============================================================================
+
+LIBRARY quac100_pkcs11
+
+EXPORTS
+    ; =========================================================================
+    ; Primary Entry Point
+    ; =========================================================================
+    ; C_GetFunctionList is the main entry point that applications call
+    ; after loading the DLL. It returns pointers to all other functions.
+    C_GetFunctionList                   @1
+
+    ; =========================================================================
+    ; General-Purpose Functions
+    ; =========================================================================
+    C_Initialize                        @2
+    C_Finalize                          @3
+    C_GetInfo                           @4
+
+    ; =========================================================================
+    ; Slot and Token Management Functions
+    ; =========================================================================
+    C_GetSlotList                       @5
+    C_GetSlotInfo                       @6
+    C_GetTokenInfo                      @7
+    C_WaitForSlotEvent                  @8
+    C_GetMechanismList                  @9
+    C_GetMechanismInfo                  @10
+    C_InitToken                         @11
+    C_InitPIN                           @12
+    C_SetPIN                            @13
+
+    ; =========================================================================
+    ; Session Management Functions
+    ; =========================================================================
+    C_OpenSession                       @14
+    C_CloseSession                      @15
+    C_CloseAllSessions                  @16
+    C_GetSessionInfo                    @17
+    C_GetOperationState                 @18
+    C_SetOperationState                 @19
+    C_Login                             @20
+    C_Logout                            @21
+
+    ; =========================================================================
+    ; Object Management Functions
+    ; =========================================================================
+    C_CreateObject                      @22
+    C_CopyObject                        @23
+    C_DestroyObject                     @24
+    C_GetObjectSize                     @25
+    C_GetAttributeValue                 @26
+    C_SetAttributeValue                 @27
+    C_FindObjectsInit                   @28
+    C_FindObjects                       @29
+    C_FindObjectsFinal                  @30
+
+    ; =========================================================================
+    ; Encryption Functions
+    ; =========================================================================
+    C_EncryptInit                       @31
+    C_Encrypt                           @32
+    C_EncryptUpdate                     @33
+    C_EncryptFinal                      @34
+
+    ; =========================================================================
+    ; Decryption Functions
+    ; =========================================================================
+    C_DecryptInit                       @35
+    C_Decrypt                           @36
+    C_DecryptUpdate                     @37
+    C_DecryptFinal                      @38
+
+    ; =========================================================================
+    ; Message Digesting Functions
+    ; =========================================================================
+    C_DigestInit                        @39
+    C_Digest                            @40
+    C_DigestUpdate                      @41
+    C_DigestKey                         @42
+    C_DigestFinal                       @43
+
+    ; =========================================================================
+    ; Signing and MACing Functions
+    ; =========================================================================
+    C_SignInit                          @44
+    C_Sign                              @45
+    C_SignUpdate                        @46
+    C_SignFinal                         @47
+    C_SignRecoverInit                   @48
+    C_SignRecover                       @49
+
+    ; =========================================================================
+    ; Verification Functions
+    ; =========================================================================
+    C_VerifyInit                        @50
+    C_Verify                            @51
+    C_VerifyUpdate                      @52
+    C_VerifyFinal                       @53
+    C_VerifyRecoverInit                 @54
+    C_VerifyRecover                     @55
+
+    ; =========================================================================
+    ; Dual-Function Cryptographic Functions
+    ; =========================================================================
+    C_DigestEncryptUpdate               @56
+    C_DecryptDigestUpdate               @57
+    C_SignEncryptUpdate                 @58
+    C_DecryptVerifyUpdate               @59
+
+    ; =========================================================================
+    ; Key Management Functions
+    ; =========================================================================
+    C_GenerateKey                       @60
+    C_GenerateKeyPair                   @61
+    C_WrapKey                           @62
+    C_UnwrapKey                         @63
+    C_DeriveKey                         @64
+
+    ; =========================================================================
+    ; Random Number Generation Functions
+    ; =========================================================================
+    C_SeedRandom                        @65
+    C_GenerateRandom                    @66
+
+    ; =========================================================================
+    ; Parallel Function Management Functions
+    ; =========================================================================
+    C_GetFunctionStatus                 @67
+    C_CancelFunction                    @68
+
+; =============================================================================
+; Build Instructions for Windows
+; =============================================================================
+;
+; Prerequisites:
+;   - Visual Studio 2019 or later with C++ workload
+;   - OpenSSL development files (for software simulation)
+;   - Optional: QUAC 100 SDK for hardware acceleration
+;
+; Step 1: Install OpenSSL
+;   - Download from https://slproweb.com/products/Win32OpenSSL.html
+;   - Install to C:\OpenSSL-Win64
+;
+; Step 2: Build PKCS#11 Module (Command Line)
+;   set OPENSSL_ROOT=C:\OpenSSL-Win64
+;   cl /LD /O2 /MD /DNDEBUG ^
+;      /I%OPENSSL_ROOT%\include ^
+;      /DEF:quac100_pkcs11.def ^
+;      quac100_pkcs11.c quac100_pkcs11_slot.c quac100_pkcs11_session.c ^
+;      quac100_pkcs11_object.c quac100_pkcs11_crypto.c ^
+;      /link /LIBPATH:%OPENSSL_ROOT%\lib\VC\x64\MD libcrypto.lib
+;
+; Step 3: Build PKCS#11 Module (CMake)
+;   mkdir build && cd build
+;   cmake -G "Visual Studio 17 2022" ^
+;         -DOPENSSL_ROOT_DIR=C:\OpenSSL-Win64 ..
+;   cmake --build . --config Release
+;
+; Step 4: Test
+;   pkcs11-tool --module Release\quac100_pkcs11.dll --list-mechanisms
+;
+; Step 5: Install
+;   copy Release\quac100_pkcs11.dll C:\Windows\System32\
+;
+; =============================================================================
+; Debug Build
+; =============================================================================
+;
+; For debug builds with symbols:
+;   cl /LDd /Od /MDd /Zi /DEBUG ^
+;      /I%OPENSSL_ROOT%\include ^
+;      /DEF:quac100_pkcs11.def ^
+;      quac100_pkcs11.c quac100_pkcs11_slot.c quac100_pkcs11_session.c ^
+;      quac100_pkcs11_object.c quac100_pkcs11_crypto.c ^
+;      /link /DEBUG /LIBPATH:%OPENSSL_ROOT%\lib\VC\x64\MDd libcryptod.lib
+;
+; =============================================================================
+; Usage with pkcs11-tool (OpenSC)
+; =============================================================================
+;
+; List slots:
+;   pkcs11-tool --module quac100_pkcs11.dll --list-slots
+;
+; List mechanisms:
+;   pkcs11-tool --module quac100_pkcs11.dll --list-mechanisms
+;
+; Initialize token:
+;   pkcs11-tool --module quac100_pkcs11.dll --init-token --label "QUAC-100"
+;
+; Generate ML-DSA-65 keypair:
+;   pkcs11-tool --module quac100_pkcs11.dll --login --keypairgen ^
+;               --key-type ML-DSA-65 --label "signing-key"
+;
+; Sign data:
+;   pkcs11-tool --module quac100_pkcs11.dll --login --sign ^
+;               --mechanism ML-DSA-65 --input-file data.bin
+;
+; Generate random:
+;   pkcs11-tool --module quac100_pkcs11.dll --generate-random 32
+;
+; =============================================================================
+; Usage with Firefox/NSS
+; =============================================================================
+;
+; 1. Open Firefox
+; 2. Go to Settings -> Privacy & Security -> Security Devices
+; 3. Click "Load" and browse to quac100_pkcs11.dll
+; 4. Enter module name "QUAC 100 PQC Module"
+;
+; =============================================================================
+; Notes
+; =============================================================================
+;
+; - Ordinals (@N) are stable across versions for binary compatibility
+; - All 68 PKCS#11 v2.40 functions are exported
+; - The module supports both hardware acceleration (with QUAC SDK) and
+;   software simulation (with OpenSSL)
+; - For production use, ensure FIPS compliance requirements are met
+;
+; =============================================================================

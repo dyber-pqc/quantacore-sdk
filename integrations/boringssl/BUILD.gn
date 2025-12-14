@@ -1,0 +1,594 @@
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+#
+# QUAC 100 BoringSSL Integration
+#
+# Post-quantum cryptography provider for BoringSSL with hardware acceleration.
+# Provides ML-KEM key exchange and ML-DSA signatures for TLS 1.3.
+#
+# Usage:
+#   gn gen out/Default --args='quac_enable_hardware=true'
+#   ninja -C out/Default
+#
+# Targets:
+#   :quac_boringssl         - Main integration library
+#   :quac_boringssl_test    - Test suite
+#   :quac_boringssl_bench   - Benchmarks
+#   :quac_pqc_provider      - PQC algorithm provider
+
+import("//build/config/compiler/compiler.gni")
+
+declare_args() {
+  # Enable QUAC 100 hardware acceleration
+  quac_enable_hardware = false
+
+  # Path to QUAC 100 SDK (required if quac_enable_hardware=true)
+  quac_sdk_path = ""
+
+  # Enable ML-KEM key exchange algorithms
+  quac_enable_mlkem = true
+
+  # Enable ML-DSA signature algorithms
+  quac_enable_mldsa = true
+
+  # Enable hybrid classical+PQC modes
+  quac_enable_hybrid = true
+
+  # Build tests
+  quac_build_tests = true
+
+  # Build benchmarks
+  quac_build_benchmarks = true
+
+  # Enable FIPS mode restrictions
+  quac_fips_mode = false
+}
+
+# =============================================================================
+# Configuration
+# =============================================================================
+
+config("quac_boringssl_config") {
+  include_dirs = [ "." ]
+
+  defines = []
+
+  if (quac_enable_mlkem) {
+    defines += [ "QUAC_ENABLE_MLKEM=1" ]
+  }
+
+  if (quac_enable_mldsa) {
+    defines += [ "QUAC_ENABLE_MLDSA=1" ]
+  }
+
+  if (quac_enable_hybrid) {
+    defines += [ "QUAC_ENABLE_HYBRID=1" ]
+  }
+
+  if (quac_fips_mode) {
+    defines += [ "QUAC_FIPS_MODE=1" ]
+  }
+}
+
+config("quac_hardware_config") {
+  if (quac_enable_hardware) {
+    assert(quac_sdk_path != "",
+           "quac_sdk_path must be set when quac_enable_hardware=true")
+
+    include_dirs = [ "$quac_sdk_path/include" ]
+    lib_dirs = [ "$quac_sdk_path/lib" ]
+    defines = [ "QUAC_HAS_HARDWARE=1" ]
+  }
+}
+
+config("quac_internal_config") {
+  visibility = [ ":*" ]
+
+  cflags = []
+  cflags_c = []
+  cflags_cc = []
+
+  if (is_clang || is_gcc) {
+    cflags += [
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Wno-unused-parameter",
+    ]
+    cflags_c += [ "-std=c11" ]
+    cflags_cc += [ "-std=c++17" ]
+  }
+
+  if (is_win) {
+    cflags += [
+      "/W4",
+      "/WX-",
+    ]
+    defines = [ "_CRT_SECURE_NO_WARNINGS" ]
+  }
+}
+
+# =============================================================================
+# Source Sets
+# =============================================================================
+
+source_set("quac_pqc_common") {
+  sources = [
+    "pqc/mlkem.c",
+    "pqc/mlkem.h",
+    "pqc/mldsa.c",
+    "pqc/mldsa.h",
+    "pqc/pqc_common.c",
+    "pqc/pqc_common.h",
+  ]
+
+  public_configs = [ ":quac_boringssl_config" ]
+  configs += [ ":quac_internal_config" ]
+
+  deps = [ "//third_party/boringssl:crypto" ]
+}
+
+source_set("quac_ntt") {
+  sources = [
+    "ntt/ntt.c",
+    "ntt/ntt.h",
+    "ntt/ntt_radix16.c",
+    "ntt/ntt_radix16.h",
+    "ntt/reduce.c",
+    "ntt/reduce.h",
+  ]
+
+  public_configs = [ ":quac_boringssl_config" ]
+  configs += [ ":quac_internal_config" ]
+}
+
+source_set("quac_hardware_ops") {
+  sources = [
+    "hw/quac_hw.c",
+    "hw/quac_hw.h",
+    "hw/quac_hw_mlkem.c",
+    "hw/quac_hw_mldsa.c",
+    "hw/quac_hw_ntt.c",
+  ]
+
+  public_configs = [
+    ":quac_boringssl_config",
+    ":quac_hardware_config",
+  ]
+  configs += [ ":quac_internal_config" ]
+
+  if (quac_enable_hardware) {
+    libs = [ "quac100" ]
+  }
+}
+
+# =============================================================================
+# Main Library
+# =============================================================================
+
+static_library("quac_boringssl") {
+  sources = [
+    "quac_boringssl.c",
+    "quac_boringssl.h",
+    "quac_boringssl_internal.h",
+    "quac_provider.c",
+    "quac_provider.h",
+  ]
+
+  public_configs = [
+    ":quac_boringssl_config",
+    ":quac_hardware_config",
+  ]
+  configs += [ ":quac_internal_config" ]
+
+  public_deps = [
+    ":quac_hardware_ops",
+    ":quac_ntt",
+    ":quac_pqc_common",
+    "//third_party/boringssl:crypto",
+    "//third_party/boringssl:ssl",
+  ]
+
+  if (quac_enable_hardware) {
+    libs = [ "quac100" ]
+  }
+}
+
+shared_library("quac_boringssl_shared") {
+  output_name = "quac_boringssl"
+
+  sources = [
+    "quac_boringssl.c",
+    "quac_boringssl.h",
+    "quac_boringssl_internal.h",
+    "quac_provider.c",
+    "quac_provider.h",
+  ]
+
+  public_configs = [
+    ":quac_boringssl_config",
+    ":quac_hardware_config",
+  ]
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_hardware_ops",
+    ":quac_ntt",
+    ":quac_pqc_common",
+    "//third_party/boringssl:crypto",
+    "//third_party/boringssl:ssl",
+  ]
+
+  if (is_win) {
+    sources += [ "quac_boringssl.def" ]
+  }
+
+  if (quac_enable_hardware) {
+    libs = [ "quac100" ]
+  }
+}
+
+# =============================================================================
+# PQC Provider (Plugin Interface)
+# =============================================================================
+
+source_set("quac_pqc_provider") {
+  sources = [
+    "provider/quac_pqc_provider.c",
+    "provider/quac_pqc_provider.h",
+    "provider/quac_pqc_kem.c",
+    "provider/quac_pqc_sig.c",
+    "provider/quac_pqc_kex.c",
+  ]
+
+  public_configs = [
+    ":quac_boringssl_config",
+    ":quac_hardware_config",
+  ]
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    "//third_party/boringssl:crypto",
+  ]
+}
+
+# =============================================================================
+# TLS Integration
+# =============================================================================
+
+source_set("quac_tls_integration") {
+  sources = [
+    "tls/quac_tls_kex.c",
+    "tls/quac_tls_kex.h",
+    "tls/quac_tls_sig.c",
+    "tls/quac_tls_sig.h",
+    "tls/quac_tls_hybrid.c",
+    "tls/quac_tls_hybrid.h",
+  ]
+
+  public_configs = [ ":quac_boringssl_config" ]
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    ":quac_pqc_provider",
+    "//third_party/boringssl:ssl",
+  ]
+}
+
+# =============================================================================
+# Tests
+# =============================================================================
+
+if (quac_build_tests) {
+  executable("quac_boringssl_test") {
+    testonly = true
+
+    sources = [
+      "tests/test_main.c",
+      "tests/test_mlkem.c",
+      "tests/test_mldsa.c",
+      "tests/test_ntt.c",
+      "tests/test_provider.c",
+      "tests/test_tls.c",
+      "tests/test_hybrid.c",
+    ]
+
+    configs += [ ":quac_internal_config" ]
+
+    deps = [
+      ":quac_boringssl",
+      ":quac_pqc_provider",
+      ":quac_tls_integration",
+      "//third_party/boringssl:crypto",
+      "//third_party/boringssl:ssl",
+    ]
+
+    if (is_linux || is_mac) {
+      libs = [ "pthread" ]
+    }
+  }
+
+  # Individual test targets for CTest integration
+  executable("test_mlkem") {
+    testonly = true
+    sources = [
+      "tests/test_main.c",
+      "tests/test_mlkem.c",
+    ]
+    configs += [ ":quac_internal_config" ]
+    deps = [
+      ":quac_boringssl",
+      "//third_party/boringssl:crypto",
+    ]
+  }
+
+  executable("test_mldsa") {
+    testonly = true
+    sources = [
+      "tests/test_main.c",
+      "tests/test_mldsa.c",
+    ]
+    configs += [ ":quac_internal_config" ]
+    deps = [
+      ":quac_boringssl",
+      "//third_party/boringssl:crypto",
+    ]
+  }
+
+  executable("test_ntt") {
+    testonly = true
+    sources = [
+      "tests/test_main.c",
+      "tests/test_ntt.c",
+    ]
+    configs += [ ":quac_internal_config" ]
+    deps = [
+      ":quac_ntt",
+    ]
+  }
+}
+
+# =============================================================================
+# Benchmarks
+# =============================================================================
+
+if (quac_build_benchmarks) {
+  executable("quac_boringssl_bench") {
+    sources = [
+      "bench/bench_main.c",
+      "bench/bench_mlkem.c",
+      "bench/bench_mldsa.c",
+      "bench/bench_ntt.c",
+      "bench/bench_tls.c",
+      "bench/bench_utils.c",
+      "bench/bench_utils.h",
+    ]
+
+    configs += [ ":quac_internal_config" ]
+
+    deps = [
+      ":quac_boringssl",
+      ":quac_pqc_provider",
+      ":quac_tls_integration",
+      "//third_party/boringssl:crypto",
+      "//third_party/boringssl:ssl",
+    ]
+
+    if (is_linux || is_mac) {
+      libs = [
+        "pthread",
+        "m",
+      ]
+    }
+  }
+
+  # Speed comparison benchmark
+  executable("quac_speed") {
+    sources = [
+      "bench/quac_speed.c",
+    ]
+
+    configs += [ ":quac_internal_config" ]
+
+    deps = [
+      ":quac_boringssl",
+      "//third_party/boringssl:crypto",
+    ]
+
+    if (is_linux || is_mac) {
+      libs = [ "m" ]
+    }
+  }
+}
+
+# =============================================================================
+# Tools
+# =============================================================================
+
+executable("quac_keygen") {
+  sources = [
+    "tools/quac_keygen.c",
+  ]
+
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    "//third_party/boringssl:crypto",
+  ]
+}
+
+executable("quac_certgen") {
+  sources = [
+    "tools/quac_certgen.c",
+  ]
+
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    "//third_party/boringssl:crypto",
+  ]
+}
+
+# =============================================================================
+# Examples
+# =============================================================================
+
+executable("example_pqc_client") {
+  sources = [
+    "examples/pqc_client.c",
+  ]
+
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    ":quac_tls_integration",
+    "//third_party/boringssl:crypto",
+    "//third_party/boringssl:ssl",
+  ]
+
+  if (is_linux || is_mac) {
+    libs = [ "pthread" ]
+  }
+}
+
+executable("example_pqc_server") {
+  sources = [
+    "examples/pqc_server.c",
+  ]
+
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    ":quac_tls_integration",
+    "//third_party/boringssl:crypto",
+    "//third_party/boringssl:ssl",
+  ]
+
+  if (is_linux || is_mac) {
+    libs = [ "pthread" ]
+  }
+}
+
+executable("example_hybrid_kex") {
+  sources = [
+    "examples/hybrid_kex.c",
+  ]
+
+  configs += [ ":quac_internal_config" ]
+
+  deps = [
+    ":quac_boringssl",
+    ":quac_tls_integration",
+    "//third_party/boringssl:crypto",
+  ]
+}
+
+# =============================================================================
+# Fuzzing Targets (for OSS-Fuzz integration)
+# =============================================================================
+
+if (use_libfuzzer) {
+  executable("quac_mlkem_fuzzer") {
+    sources = [
+      "fuzz/mlkem_fuzzer.c",
+    ]
+
+    configs += [ ":quac_internal_config" ]
+
+    deps = [
+      ":quac_boringssl",
+      "//third_party/boringssl:crypto",
+    ]
+  }
+
+  executable("quac_mldsa_fuzzer") {
+    sources = [
+      "fuzz/mldsa_fuzzer.c",
+    ]
+
+    configs += [ ":quac_internal_config" ]
+
+    deps = [
+      ":quac_boringssl",
+      "//third_party/boringssl:crypto",
+    ]
+  }
+}
+
+# =============================================================================
+# Group Targets
+# =============================================================================
+
+group("all") {
+  deps = [
+    ":quac_boringssl",
+    ":quac_boringssl_shared",
+    ":quac_keygen",
+    ":quac_certgen",
+    ":example_pqc_client",
+    ":example_pqc_server",
+    ":example_hybrid_kex",
+  ]
+
+  if (quac_build_tests) {
+    deps += [
+      ":quac_boringssl_test",
+      ":test_mlkem",
+      ":test_mldsa",
+      ":test_ntt",
+    ]
+  }
+
+  if (quac_build_benchmarks) {
+    deps += [
+      ":quac_boringssl_bench",
+      ":quac_speed",
+    ]
+  }
+}
+
+group("tests") {
+  testonly = true
+
+  deps = []
+
+  if (quac_build_tests) {
+    deps += [
+      ":quac_boringssl_test",
+      ":test_mlkem",
+      ":test_mldsa",
+      ":test_ntt",
+    ]
+  }
+}
+
+group("benchmarks") {
+  deps = []
+
+  if (quac_build_benchmarks) {
+    deps += [
+      ":quac_boringssl_bench",
+      ":quac_speed",
+    ]
+  }
+}
+
+group("tools") {
+  deps = [
+    ":quac_keygen",
+    ":quac_certgen",
+  ]
+}
+
+group("examples") {
+  deps = [
+    ":example_pqc_client",
+    ":example_pqc_server",
+    ":example_hybrid_kex",
+  ]
+}

@@ -1,0 +1,2 @@
+# QUAC 100 Python SDK - Runtime Dependencies
+# No runtime dependencies required - uses only Python standard library

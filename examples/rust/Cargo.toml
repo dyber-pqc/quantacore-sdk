@@ -1,0 +1,38 @@
+[package]
+name = "quac100-examples"
+version = "1.0.0"
+edition = "2021"
+authors = ["Dyber, Inc."]
+description = "QUAC 100 SDK Examples"
+license = "Proprietary"
+
+[dependencies]
+# Would normally use: quac100 = { path = "../../bindings/rust" }
+hex = "0.4"
+rand = "0.8"
+clap = { version = "4.0", features = ["derive"] }
+zeroize = "1.6"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[example]]
+name = "hello_quac"
+path = "src/hello_quac.rs"
+
+[[example]]
+name = "kem_demo"
+path = "src/kem_demo.rs"
+
+[[example]]
+name = "sign_demo"
+path = "src/sign_demo.rs"
+
+[[example]]
+name = "hybrid_encrypt"
+path = "src/hybrid_encrypt.rs"
+
+[features]
+default = ["simulator"]
+simulator = []
+hardware = []

@@ -1,0 +1,10 @@
+^D:\QUANTACORE-SDK\BINDINGS\JAVA\NATIVE\BUILD\CMAKEFILES\0BF2D674A159D0C146506B0479344358\GENERATE.STAMP.RULE
+setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/java/native -BD:/quantacore-sdk/bindings/java/native/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/quantacore-sdk/bindings/java/native/build/quac100_jni.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

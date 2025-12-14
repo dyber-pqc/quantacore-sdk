@@ -1,0 +1,71 @@
+; =============================================================================
+; QUAC 100 OpenSSL Provider - Windows Module Definition File
+; =============================================================================
+;
+; This file defines the exported symbols from the quac100.dll provider.
+; OpenSSL providers must export only OSSL_provider_init.
+;
+; Usage:
+;   link /DEF:quac100.def /DLL /OUT:quac100.dll ...
+;
+; Or with MSVC:
+;   cl /LD quac100_provider.c ... /link /DEF:quac100.def
+;
+; Copyright 2025 Dyber, Inc. All Rights Reserved.
+; =============================================================================
+
+LIBRARY quac100
+
+EXPORTS
+    ; OpenSSL Provider Entry Point (required)
+    OSSL_provider_init
+
+    ; Optional: Version information for debugging
+    ; These are not required by OpenSSL but can be useful
+    ; quac100_version_string     DATA
+    ; quac100_build_info         DATA
+
+; =============================================================================
+; Notes:
+; =============================================================================
+;
+; 1. OSSL_provider_init is the ONLY function that must be exported for
+;    OpenSSL to load the provider. All other symbols should be hidden.
+;
+; 2. The provider registers its algorithms through the dispatch table
+;    returned by OSSL_provider_init, not through direct exports.
+;
+; 3. For FIPS mode, additional symbols may need to be exported for
+;    the FIPS indicator functions.
+;
+; 4. Debug builds may export additional symbols for testing:
+;    IFDEF DEBUG
+;        quac100_debug_dump
+;        quac100_test_kat
+;    ENDIF
+;
+; =============================================================================
+; Build Instructions (Visual Studio):
+; =============================================================================
+;
+; From Developer Command Prompt:
+;
+; cl /c /O2 /DNDEBUG /I"%OPENSSL_PATH%\include" ^
+;    quac100_provider.c quac100_kem_alg.c quac100_sig_alg.c ^
+;    quac100_rand.c quac100_encoder.c quac100_store.c
+;
+; link /DLL /OUT:quac100.dll /DEF:quac100.def ^
+;    quac100_provider.obj quac100_kem_alg.obj quac100_sig_alg.obj ^
+;    quac100_rand.obj quac100_encoder.obj quac100_store.obj ^
+;    /LIBPATH:"%OPENSSL_PATH%\lib" libssl.lib libcrypto.lib
+;
+; =============================================================================
+; Installation:
+; =============================================================================
+;
+; Copy quac100.dll to:
+;   %OPENSSL_PATH%\lib\ossl-modules\
+; or
+;   C:\Program Files\OpenSSL\lib\ossl-modules\
+;
+; =============================================================================

@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+
+Name: quac100
+Description: QUAC 100 Post-Quantum Cryptographic Accelerator SDK
+URL: https://dyber.io
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lquac100
+Libs.private: -lpthread -lm
+Cflags: -I${includedir}

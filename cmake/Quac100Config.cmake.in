@@ -1,0 +1,35 @@
+@PACKAGE_INIT@
+
+#===============================================================================
+# QuantaCore SDK CMake Package Configuration
+# Dyber, Inc. - QUAC 100 Post-Quantum Cryptographic Accelerator
+#===============================================================================
+
+include("${CMAKE_CURRENT_LIST_DIR}/Quac100Targets.cmake")
+
+# Provide useful variables
+set(QUAC100_VERSION @QUAC_VERSION@)
+set(QUAC100_VERSION_MAJOR @QUAC_VERSION_MAJOR@)
+set(QUAC100_VERSION_MINOR @QUAC_VERSION_MINOR@)
+set(QUAC100_VERSION_PATCH @QUAC_VERSION_PATCH@)
+
+# Check for required components
+set(_QUAC100_REQUIRED_VARS QUAC100_VERSION)
+
+# Simulator availability
+set(QUAC100_SIMULATOR_FOUND @QUAC_BUILD_SIMULATOR@)
+if(QUAC100_SIMULATOR_FOUND)
+    set(_QUAC100_REQUIRED_VARS ${_QUAC100_REQUIRED_VARS} QUAC100_SIMULATOR_FOUND)
+endif()
+
+check_required_components(Quac100)
+
+# Provide imported targets info
+if(NOT TARGET Quac100::quac100)
+    message(FATAL_ERROR "Quac100::quac100 target not found")
+endif()
+
+# Helpful message
+if(NOT Quac100_FIND_QUIETLY)
+    message(STATUS "Found QuantaCore SDK v${QUAC100_VERSION}")
+endif()

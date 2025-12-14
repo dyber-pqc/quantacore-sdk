@@ -1,0 +1,10 @@
+^D:\QUANTACORE-SDK\BINDINGS\JAVA\NATIVE\CMAKELISTS.TXT
+setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/java/native -BD:/quantacore-sdk/bindings/java/native/build --check-stamp-file D:/quantacore-sdk/bindings/java/native/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

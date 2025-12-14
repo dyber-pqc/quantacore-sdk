@@ -1,0 +1,12 @@
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/quac100_static.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/quac100_shared.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/basic_example.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/kem_example.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/sign_example.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/random_example.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/hash_example.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/test_quac100.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/simple_test.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/RUN_TESTS.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/ALL_BUILD.dir
+D:/quantacore-sdk/bindings/c/build/CMakeFiles/ZERO_CHECK.dir

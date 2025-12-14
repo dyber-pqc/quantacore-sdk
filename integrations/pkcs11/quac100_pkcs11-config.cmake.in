@@ -1,0 +1,43 @@
+@PACKAGE_INIT@
+
+# =============================================================================
+# QUAC 100 PKCS#11 Module - CMake Package Configuration
+# =============================================================================
+#
+# This file is installed as part of the QUAC 100 PKCS#11 module and enables
+# CMake find_package() support.
+#
+# Usage:
+#   find_package(quac100_pkcs11 REQUIRED)
+#   target_link_libraries(myapp PRIVATE quac100_pkcs11::quac100_pkcs11)
+#
+# Provides:
+#   quac100_pkcs11::quac100_pkcs11 - The PKCS#11 shared library target
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+# =============================================================================
+
+include(CMakeFindDependencyMacro)
+
+# Dependencies
+find_dependency(OpenSSL REQUIRED)
+if(NOT WIN32)
+    find_dependency(Threads REQUIRED)
+endif()
+
+# Include the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/quac100_pkcs11-targets.cmake")
+
+# Check required components
+check_required_components(quac100_pkcs11)
+
+# Provide version information
+set(quac100_pkcs11_VERSION @PROJECT_VERSION@)
+set(quac100_pkcs11_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(quac100_pkcs11_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(quac100_pkcs11_VERSION_PATCH @PROJECT_VERSION_PATCH@)
+
+# Module path to library
+set(QUAC100_PKCS11_LIBRARY quac100_pkcs11::quac100_pkcs11)
+set(QUAC100_PKCS11_INCLUDE_DIR "@PACKAGE_INCLUDEDIR@")
+set(QUAC100_PKCS11_FOUND TRUE)

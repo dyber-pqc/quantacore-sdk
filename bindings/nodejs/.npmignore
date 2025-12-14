@@ -1,0 +1,27 @@
+# Source files (we publish compiled)
+src/
+
+# Tests
+test/
+coverage/
+jest.config.js
+
+# Examples
+examples/
+
+# Dev config
+tsconfig.json
+.eslintrc.js
+.prettierrc
+
+# IDE
+.idea/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Misc
+*.log
+.DS_Store

@@ -1,0 +1,175 @@
+# D:\quantacore-sdk\integrations\pkcs11\quac100.module
+#
+# QUAC 100 PKCS#11 - p11-kit Module Configuration
+#
+# p11-kit provides a centralized way to manage PKCS#11 modules on Linux.
+# This file should be installed to /etc/pkcs11/modules/ or
+# ~/.config/pkcs11/modules/
+#
+# Installation:
+#   sudo cp quac100.module /etc/pkcs11/modules/
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+
+# =============================================================================
+# Module Configuration
+# =============================================================================
+
+# Path to the PKCS#11 module library
+module: /usr/lib/libquac100_pkcs11.so
+
+# Alternative paths for different platforms:
+# module: /usr/lib64/libquac100_pkcs11.so
+# module: /usr/local/lib/libquac100_pkcs11.so
+
+# Mark module as critical (required for security operations)
+critical: yes
+
+# Enable the module by default
+enable-in: all
+
+# Trust policy: whether certificates from this module should be trusted
+# Options: yes, no, whitelist, blacklist
+trust-policy: yes
+
+# Priority for this module (higher = tried first)
+priority: 100
+
+# =============================================================================
+# Module Flags
+# =============================================================================
+
+# Managed: p11-kit will initialize/finalize the module
+managed: yes
+
+# Log calls to this module (for debugging)
+# log-calls: yes
+
+# =============================================================================
+# Remote Module (optional - for network HSM)
+# =============================================================================
+
+# Enable remote access to module
+# remote: unix:path=/run/quac100/pkcs11.socket
+
+# =============================================================================
+# p11-kit Commands Reference
+# =============================================================================
+#
+# List all registered modules:
+#   p11-kit list-modules
+#
+# List tokens in all modules:
+#   p11-kit list-tokens
+#
+# List objects in a token:
+#   p11-kit list-objects --login
+#
+# Generate key pair:
+#   p11tool --provider /usr/lib/libquac100_pkcs11.so --login \
+#           --generate-privkey=ECDSA --bits=256 --label=mykey
+#
+# Export public key:
+#   p11tool --provider /usr/lib/libquac100_pkcs11.so \
+#           --export "pkcs11:token=QUAC100;object=mykey;type=public"
+#
+# Export certificate:
+#   p11tool --provider /usr/lib/libquac100_pkcs11.so \
+#           --export "pkcs11:token=QUAC100;object=mycert;type=cert"
+#
+# Delete object:
+#   p11tool --provider /usr/lib/libquac100_pkcs11.so --login \
+#           --delete "pkcs11:token=QUAC100;object=mykey"
+#
+# Initialize token:
+#   p11tool --provider /usr/lib/libquac100_pkcs11.so \
+#           --initialize "pkcs11:token=QUAC100" --label="My Token"
+#
+# =============================================================================
+# PKCS#11 URI Format Reference
+# =============================================================================
+#
+# Format: pkcs11:attribute=value;attribute=value
+#
+# Common attributes:
+#   token       - Token label
+#   serial      - Token serial number
+#   manufacturer - Token manufacturer
+#   model       - Token model
+#   object      - Object label
+#   type        - Object type (cert, public, private, secret-key, data)
+#   id          - Object ID (hex-encoded)
+#
+# Examples:
+#   pkcs11:token=QUAC100
+#   pkcs11:token=QUAC100;object=mykey;type=private
+#   pkcs11:token=QUAC100;object=mycert;type=cert
+#   pkcs11:token=QUAC100;id=%01%02%03
+#
+# Query parameters (after ?):
+#   pin-source  - Path to file containing PIN
+#   pin-value   - PIN value (use with caution!)
+#   module-path - Path to PKCS#11 module
+#
+# Example with PIN:
+#   pkcs11:token=QUAC100;object=mykey?pin-source=/run/secrets/token-pin
+#
+# =============================================================================
+# Integration with Applications
+# =============================================================================
+#
+# OpenSSL (with pkcs11 engine):
+#   export PKCS11_MODULE_PATH=/usr/lib/libquac100_pkcs11.so
+#   openssl pkeyutl -engine pkcs11 -keyform engine \
+#           -inkey "pkcs11:token=QUAC100;object=mykey;type=private" \
+#           -sign -in data.bin -out sig.bin
+#
+# GnuTLS:
+#   gnutls-cli --x509keyfile="pkcs11:token=QUAC100;object=mykey" \
+#              --x509certfile="pkcs11:token=QUAC100;object=mycert" \
+#              server.example.com
+#
+# SSH Agent:
+#   ssh-add -s /usr/lib/libquac100_pkcs11.so
+#
+# curl:
+#   curl --key "pkcs11:token=QUAC100;object=mykey" \
+#        --cert "pkcs11:token=QUAC100;object=mycert" \
+#        https://server.example.com
+#
+# Firefox/Chrome:
+#   Modules registered with p11-kit are automatically available
+#   in browsers using NSS or p11-kit for certificate management.
+#
+# =============================================================================
+# systemd Integration
+# =============================================================================
+#
+# For system services that need PKCS#11:
+#
+# [Service]
+# Environment=PKCS11_MODULE_PATH=/usr/lib/libquac100_pkcs11.so
+# Environment=QUAC100_PIN_FILE=/run/secrets/quac100-pin
+#
+# Or with p11-kit proxy:
+#
+# [Service]
+# Environment=P11_KIT_SERVER_ADDRESS=unix:path=/run/p11-kit/pkcs11
+#
+# =============================================================================
+# Troubleshooting
+# =============================================================================
+#
+# Enable p11-kit debugging:
+#   export P11_KIT_DEBUG=all
+#   p11-kit list-modules
+#
+# Check module loading:
+#   P11_KIT_DEBUG=all p11tool --provider /usr/lib/libquac100_pkcs11.so --list-tokens
+#
+# Verify library dependencies:
+#   ldd /usr/lib/libquac100_pkcs11.so
+#
+# Check permissions:
+#   ls -la /usr/lib/libquac100_pkcs11.so
+#   ls -la /etc/pkcs11/modules/quac100.module

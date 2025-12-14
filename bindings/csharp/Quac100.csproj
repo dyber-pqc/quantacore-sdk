@@ -1,0 +1,145 @@
+<!-- D:\quantacore-sdk\bindings\csharp\Quac100.csproj -->
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>
+            net6.0;net7.0;net8.0;netstandard2.1
+        </TargetFrameworks>
+        <LangVersion>
+            12.0
+        </LangVersion>
+        <Nullable>
+            enable
+        </Nullable>
+        <ImplicitUsings>
+            enable
+        </ImplicitUsings>
+        <AllowUnsafeBlocks>
+            true
+        </AllowUnsafeBlocks>
+        <!-- Package Information -->
+        <PackageId>
+            Dyber.Quac100
+        </PackageId>
+        <Version>
+            1.0.0
+        </Version>
+        <Authors>
+            Dyber, Inc.
+        </Authors>
+        <Company>
+            Dyber, Inc.
+        </Company>
+        <Product>
+            QUAC 100 SDK
+        </Product>
+        <Description>
+            .NET bindings for the QUAC 100 Post-Quantum Cryptographic Accelerator.
+      Provides high-performance hardware-accelerated ML-KEM, ML-DSA, SLH-DSA,
+      and quantum random number generation.
+        </Description>
+        <Copyright>
+            Copyright © 2025 Dyber, Inc. All Rights Reserved.
+        </Copyright>
+        <PackageLicenseExpression>
+            Proprietary
+        </PackageLicenseExpression>
+        <PackageProjectUrl>
+            https://dyber.io/quac100
+        </PackageProjectUrl>
+        <RepositoryUrl>
+            https://github.com/dyber-io/quantacore-sdk
+        </RepositoryUrl>
+        <RepositoryType>
+            git
+        </RepositoryType>
+        <PackageTags>
+            cryptography;post-quantum;pqc;ml-kem;ml-dsa;kyber;dilithium;hardware;accelerator;hqc;qrng
+        </PackageTags>
+        <PackageReadmeFile>
+            README.md
+        </PackageReadmeFile>
+        <!-- Build Configuration -->
+        <RootNamespace>
+            Dyber.Quac100
+        </RootNamespace>
+        <AssemblyName>
+            Dyber.Quac100
+        </AssemblyName>
+        <GenerateDocumentationFile>
+            true
+        </GenerateDocumentationFile>
+        <NoWarn>
+            $(NoWarn);CS1591
+        </NoWarn>
+        <!-- Strong Naming (optional, for GAC installation) -->
+        <!-- <SignAssembly>true</SignAssembly> -->
+        <!-- <AssemblyOriginatorKeyFile>Quac100.snk</AssemblyOriginatorKeyFile> -->
+        <!-- Native Library Handling -->
+        <EnableDynamicLoading>
+            true
+        </EnableDynamicLoading>
+    </PropertyGroup>
+    <!-- Debug Configuration -->
+    <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+        <DefineConstants>
+            DEBUG;TRACE
+        </DefineConstants>
+        <DebugType>
+            full
+        </DebugType>
+        <Optimize>
+            false
+        </Optimize>
+    </PropertyGroup>
+    <!-- Release Configuration -->
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DefineConstants>
+            RELEASE
+        </DefineConstants>
+        <DebugType>
+            pdbonly
+        </DebugType>
+        <Optimize>
+            true
+        </Optimize>
+    </PropertyGroup>
+    <!-- Native Library Dependencies -->
+    <ItemGroup>
+        <!-- Windows x64 -->
+        <None Include="runtimes\win-x64\native\quac100.dll"
+              Pack="true"
+              PackagePath="runtimes\win-x64\native"
+              Condition="Exists('runtimes\win-x64\native\quac100.dll')"/>
+        <!-- Linux x64 -->
+        <None Include="runtimes\linux-x64\native\libquac100.so"
+              Pack="true"
+              PackagePath="runtimes\linux-x64\native"
+              Condition="Exists('runtimes\linux-x64\native\libquac100.so')"/>
+        <!-- macOS x64 -->
+        <None Include="runtimes\osx-x64\native\libquac100.dylib"
+              Pack="true"
+              PackagePath="runtimes\osx-x64\native"
+              Condition="Exists('runtimes\osx-x64\native\libquac100.dylib')"/>
+        <!-- macOS ARM64 -->
+        <None Include="runtimes\osx-arm64\native\libquac100.dylib"
+              Pack="true"
+              PackagePath="runtimes\osx-arm64\native"
+              Condition="Exists('runtimes\osx-arm64\native\libquac100.dylib')"/>
+    </ItemGroup>
+    <!-- Package Dependencies -->
+    <ItemGroup>
+        <PackageReference Include="System.Memory"
+                          Version="4.5.5"
+                          Condition="'$(TargetFramework)' == 'netstandard2.1'"/>
+        <PackageReference Include="System.Buffers"
+                          Version="4.5.1"
+                          Condition="'$(TargetFramework)' == 'netstandard2.1'"/>
+    </ItemGroup>
+    <!-- README for NuGet -->
+    <ItemGroup>
+        <None Include="README.md"
+              Pack="true"
+              PackagePath="\"
+              Condition="Exists('README.md')"/>
+    </ItemGroup>
+</Project>

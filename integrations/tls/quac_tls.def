@@ -1,0 +1,117 @@
+; ==============================================================================
+; QUAC 100 TLS Integration - Windows DLL Export Definitions
+; ==============================================================================
+;
+; Defines exported symbols for the Windows DLL build.
+;
+; Build with Visual Studio:
+;   cl /LD /DQUAC_TLS_EXPORTS quac_tls.c quac_tls_pqc.c /link /DEF:quac_tls.def
+;
+; Build with CMake:
+;   cmake -G "Visual Studio 17 2022" -DOPENSSL_ROOT_DIR=C:\OpenSSL-Win64 ..
+;   cmake --build . --config Release
+;
+; Copyright 2025 Dyber, Inc. All Rights Reserved.
+; ==============================================================================
+
+LIBRARY quac_tls
+EXPORTS
+    ; ============================================================
+    ; Library Initialization (1-9)
+    ; ============================================================
+    quac_tls_init                           @1
+    quac_tls_cleanup                        @2
+    quac_tls_version                        @3
+    quac_tls_error_string                   @4
+
+    ; ============================================================
+    ; Configuration (10-19)
+    ; ============================================================
+    quac_tls_config_default                 @10
+
+    ; ============================================================
+    ; Context Management (20-29)
+    ; ============================================================
+    quac_tls_ctx_new                        @20
+    quac_tls_ctx_new_config                 @21
+    quac_tls_ctx_free                       @22
+
+    ; ============================================================
+    ; Certificate and Key Management (30-49)
+    ; ============================================================
+    quac_tls_ctx_use_certificate_file       @30
+    quac_tls_ctx_use_certificate            @31
+    quac_tls_ctx_use_certificate_chain_file @32
+    quac_tls_ctx_use_private_key_file       @33
+    quac_tls_ctx_use_private_key            @34
+    quac_tls_ctx_use_mldsa                  @35
+    quac_tls_ctx_check_private_key          @36
+    quac_tls_ctx_load_verify_locations      @37
+
+    ; ============================================================
+    ; Connection Management (50-69)
+    ; ============================================================
+    quac_tls_conn_new                       @50
+    quac_tls_conn_free                      @51
+    quac_tls_conn_set_fd                    @52
+    quac_tls_conn_set_server_name           @53
+    quac_tls_handshake                      @54
+    quac_tls_accept                         @55
+    quac_tls_connect                        @56
+    quac_tls_shutdown                       @57
+
+    ; ============================================================
+    ; Data Transfer (70-79)
+    ; ============================================================
+    quac_tls_read                           @70
+    quac_tls_write                          @71
+    quac_tls_pending                        @72
+
+    ; ============================================================
+    ; Connection Information (80-99)
+    ; ============================================================
+    quac_tls_get_cipher                     @80
+    quac_tls_get_version                    @81
+    quac_tls_get_kex                        @82
+    quac_tls_get_peer_certificate           @83
+    quac_tls_get_verify_result              @84
+    quac_tls_get_alpn                       @85
+    quac_tls_session_reused                 @86
+
+    ; ============================================================
+    ; Session Management (100-109)
+    ; ============================================================
+    quac_tls_get_session                    @100
+    quac_tls_set_session                    @101
+    quac_tls_session_free                   @102
+
+    ; ============================================================
+    ; Callbacks (110-119)
+    ; ============================================================
+    quac_tls_ctx_set_verify_callback        @110
+    quac_tls_ctx_set_sni_callback           @111
+    quac_tls_ctx_set_alpn_callback          @112
+    quac_tls_ctx_set_ticket_callback        @113
+
+    ; ============================================================
+    ; Statistics (120-129)
+    ; ============================================================
+    quac_tls_get_stats                      @120
+    quac_tls_ctx_get_stats                  @121
+    quac_tls_ctx_reset_stats                @122
+
+    ; ============================================================
+    ; Certificate Utilities (130-139)
+    ; ============================================================
+    quac_tls_cert_get_subject               @130
+    quac_tls_cert_get_issuer                @131
+    quac_tls_cert_get_serial                @132
+    quac_tls_cert_get_validity              @133
+    quac_tls_cert_is_pqc                    @134
+    quac_tls_cert_free                      @135
+
+    ; ============================================================
+    ; Key Generation Utilities (140-149)
+    ; ============================================================
+    quac_tls_generate_mldsa_keypair         @140
+    quac_tls_generate_self_signed_mldsa     @141

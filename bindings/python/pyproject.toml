@@ -1,0 +1,109 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantacore-sdk"
+version = "1.0.1"
+description = "Python bindings for the QUAC 100 Post-Quantum Cryptographic Accelerator"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Dyber, Inc.", email = "support@dyber.org"}
+]
+maintainers = [
+    {name = "Dyber, Inc.", email = "support@dyber.org"}
+]
+keywords = [
+    "cryptography",
+    "post-quantum",
+    "pqc",
+    "kyber",
+    "dilithium",
+    "ml-kem",
+    "ml-dsa",
+    "hardware-security",
+    "hsm",
+    "qrng",
+    "quac100"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "mypy>=1.0",
+    "black>=23.0",
+    "isort>=5.0",
+    "flake8>=6.0",
+    "sphinx>=6.0",
+    "sphinx-rtd-theme>=1.0"
+]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0"
+]
+docs = [
+    "sphinx>=6.0",
+    "sphinx-rtd-theme>=1.0"
+]
+
+[project.urls]
+Homepage = "https://dyber.org"
+Documentation = "https://docs.dyber.org/quac100/python"
+Repository = "https://github.com/dyber-pqc/quantacore-sdk"
+Issues = "https://github.com/dyber-pqc/quantacore-sdk/issues"
+
+[tool.setuptools]
+packages = ["quantacore", "quantacore.native"]
+package-dir = {"" = "."}
+include-package-data = true
+
+[tool.setuptools.package-data]
+quantacore = ["py.typed"]
+"quantacore.native" = [
+    "windows-x64/*.dll",
+    "linux-x64/*.so",
+    "macos-x64/*.dylib"
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+strict = true
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 88

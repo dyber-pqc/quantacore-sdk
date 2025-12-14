@@ -1,0 +1,207 @@
+; =============================================================================
+; QUAC 100 BoringSSL Integration - Windows Module Definition File
+; =============================================================================
+;
+; File: quac100_boringssl.def
+; Purpose: Export definitions for Windows DLL build
+;
+; Usage:
+;   cl /LD /DEF:quac100_boringssl.def quac100_*.c /I%BORINGSSL_PATH%\include ^
+;      /link %BORINGSSL_PATH%\build\ssl\ssl.lib %BORINGSSL_PATH%\build\crypto\crypto.lib
+;
+; Or with CMake:
+;   cmake -G "Visual Studio 17 2022" -DBORINGSSL_ROOT=C:\boringssl ..
+;   cmake --build . --config Release
+;
+; Installation:
+;   copy quac100_boringssl.dll %SYSTEMROOT%\System32\
+;   or application-local: copy quac100_boringssl.dll <app_directory>\
+;
+; Copyright 2025 Dyber, Inc. All Rights Reserved.
+; =============================================================================
+
+LIBRARY quac100_boringssl
+
+EXPORTS
+    ; =========================================================================
+    ; Initialization and Lifecycle
+    ; =========================================================================
+    QUAC_init                       @1
+    QUAC_init_ex                    @2
+    QUAC_cleanup                    @3
+    QUAC_is_hardware_available      @4
+    QUAC_version_string             @5
+    QUAC_get_error_string           @6
+
+    ; =========================================================================
+    ; ML-KEM (Key Encapsulation Mechanism) - FIPS 203
+    ; =========================================================================
+    QUAC_KEM_public_key_bytes       @10
+    QUAC_KEM_secret_key_bytes       @11
+    QUAC_KEM_ciphertext_bytes       @12
+    QUAC_KEM_shared_secret_bytes    @13
+    QUAC_KEM_keypair                @14
+    QUAC_KEM_encaps                 @15
+    QUAC_KEM_decaps                 @16
+
+    ; =========================================================================
+    ; ML-DSA (Digital Signature Algorithm) - FIPS 204
+    ; =========================================================================
+    QUAC_SIG_public_key_bytes       @20
+    QUAC_SIG_secret_key_bytes       @21
+    QUAC_SIG_signature_bytes        @22
+    QUAC_SIG_keypair                @23
+    QUAC_sign                       @24
+    QUAC_verify                     @25
+    QUAC_sign_prehash               @26
+    QUAC_verify_prehash             @27
+
+    ; =========================================================================
+    ; QRNG (Quantum Random Number Generator)
+    ; =========================================================================
+    QUAC_random_bytes               @30
+    QUAC_random_seed                @31
+    QUAC_random_health_check        @32
+    QUAC_random_bytes_unbuffered    @33
+    QUAC_random_get_throughput      @34
+
+    ; =========================================================================
+    ; ASN.1 Key Encoding/Decoding
+    ; =========================================================================
+    QUAC_encode_public_key_der      @40
+    QUAC_decode_public_key_der      @41
+    QUAC_encode_private_key_der     @42
+    QUAC_decode_private_key_der     @43
+    QUAC_encode_public_key_pem      @44
+    QUAC_encode_private_key_pem     @45
+
+    ; =========================================================================
+    ; EVP Integration Layer
+    ; =========================================================================
+    QUAC_EVP_register               @50
+    QUAC_EVP_PKEY_new_kem           @51
+    QUAC_EVP_PKEY_new_sig           @52
+    QUAC_EVP_PKEY_get_raw_keys      @53
+    QUAC_EVP_PKEY_keygen            @54
+    QUAC_EVP_sign                   @55
+    QUAC_EVP_verify                 @56
+    QUAC_EVP_encaps                 @57
+    QUAC_EVP_decaps                 @58
+    QUAC_EVP_get_name               @59
+    QUAC_EVP_get_nid                @60
+    QUAC_EVP_is_kem                 @61
+    QUAC_EVP_is_sig                 @62
+
+    ; =========================================================================
+    ; TLS 1.3 Hybrid Key Exchange
+    ; =========================================================================
+    QUAC_TLS_register_groups        @70
+    QUAC_TLS_get_groups             @71
+    QUAC_TLS_group_is_supported     @72
+    QUAC_TLS_group_name             @73
+    QUAC_hybrid_ctx_new             @74
+    QUAC_hybrid_ctx_free            @75
+    QUAC_hybrid_generate_keypair    @76
+    QUAC_hybrid_get_public_key      @77
+    QUAC_hybrid_set_peer_public_key @78
+    QUAC_hybrid_derive              @79
+
+    ; =========================================================================
+    ; Self-Test and FIPS Compliance
+    ; =========================================================================
+    QUAC_self_test                  @80
+    QUAC_integrity_check            @81
+
+    ; =========================================================================
+    ; Benchmarking
+    ; =========================================================================
+    QUAC_benchmark                  @90
+
+; =============================================================================
+; Build Instructions for Windows
+; =============================================================================
+;
+; Prerequisites:
+;   - Visual Studio 2019 or later with C++ workload
+;   - BoringSSL built from source (https://boringssl.googlesource.com/boringssl)
+;   - Optional: QUAC 100 SDK for hardware acceleration
+;
+; Step 1: Build BoringSSL
+;   cd boringssl
+;   mkdir build && cd build
+;   cmake -G "Visual Studio 17 2022" ..
+;   cmake --build . --config Release
+;
+; Step 2: Build QUAC Integration (Command Line)
+;   set BORINGSSL_PATH=C:\path\to\boringssl
+;   cl /LD /O2 /MD /DNDEBUG ^
+;      /I%BORINGSSL_PATH%\include ^
+;      /DEF:quac100_boringssl.def ^
+;      quac100_boringssl.c quac100_kem.c quac100_sig.c ^
+;      quac100_rand.c quac100_evp.c quac100_tls.c quac100_asn1.c ^
+;      /link /LIBPATH:%BORINGSSL_PATH%\build\ssl\Release ssl.lib ^
+;            /LIBPATH:%BORINGSSL_PATH%\build\crypto\Release crypto.lib
+;
+; Step 3: Build QUAC Integration (CMake)
+;   mkdir build && cd build
+;   cmake -G "Visual Studio 17 2022" ^
+;         -DBORINGSSL_ROOT=C:\path\to\boringssl ^
+;         -DQUAC_SDK_PATH=C:\path\to\quac-sdk ..
+;   cmake --build . --config Release
+;
+; Step 4: Test
+;   .\Release\test_quac100_boringssl.exe
+;
+; Step 5: Install
+;   copy Release\quac100_boringssl.dll C:\Windows\System32\
+;   copy Release\quac100_boringssl.lib C:\path\to\libs\
+;   copy quac100_boringssl.h C:\path\to\include\
+;
+; =============================================================================
+; Debug Build
+; =============================================================================
+;
+; For debug builds with symbols:
+;   cl /LDd /Od /MDd /Zi /DEBUG ^
+;      /I%BORINGSSL_PATH%\include ^
+;      /DEF:quac100_boringssl.def ^
+;      quac100_boringssl.c quac100_kem.c quac100_sig.c ^
+;      quac100_rand.c quac100_evp.c quac100_tls.c quac100_asn1.c ^
+;      /link /DEBUG /LIBPATH:%BORINGSSL_PATH%\build\ssl\Debug ssld.lib ^
+;            /LIBPATH:%BORINGSSL_PATH%\build\crypto\Debug cryptod.lib
+;
+; Additional debug exports (uncomment if needed):
+;   ; QUAC_debug_dump_state         @100
+;   ; QUAC_debug_set_log_callback   @101
+;   ; QUAC_debug_get_hw_status      @102
+;
+; =============================================================================
+; Usage Example (C/C++)
+; =============================================================================
+;
+; #include "quac100_boringssl.h"
+; #pragma comment(lib, "quac100_boringssl.lib")
+;
+; int main() {
+;     if (QUAC_init() != QUAC_SUCCESS) {
+;         return 1;
+;     }
+;
+;     uint8_t pk[QUAC_ML_KEM_768_PUBLIC_KEY_BYTES];
+;     uint8_t sk[QUAC_ML_KEM_768_SECRET_KEY_BYTES];
+;     QUAC_KEM_keypair(QUAC_KEM_ML_KEM_768, pk, sk);
+;
+;     QUAC_cleanup();
+;     return 0;
+; }
+;
+; =============================================================================
+; Notes
+; =============================================================================
+;
+; - Ordinals (@N) are stable across versions for binary compatibility
+; - New functions will be assigned ordinals >= 100
+; - Do not change existing ordinal assignments
+; - NONAME keyword can be added to hide symbol names (size optimization)
+;
+; =============================================================================

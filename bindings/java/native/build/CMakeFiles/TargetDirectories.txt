@@ -1,0 +1,4 @@
+D:/quantacore-sdk/bindings/java/native/build/CMakeFiles/quac100_jni.dir
+D:/quantacore-sdk/bindings/java/native/build/CMakeFiles/INSTALL.dir
+D:/quantacore-sdk/bindings/java/native/build/CMakeFiles/ALL_BUILD.dir
+D:/quantacore-sdk/bindings/java/native/build/CMakeFiles/ZERO_CHECK.dir

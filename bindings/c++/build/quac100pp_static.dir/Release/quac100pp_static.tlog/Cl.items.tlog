@@ -1,0 +1,8 @@
+D:\quantacore-sdk\bindings\c++\src\quac100.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\quac100.obj
+D:\quantacore-sdk\bindings\c++\src\device.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\device.obj
+D:\quantacore-sdk\bindings\c++\src\kem.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\kem.obj
+D:\quantacore-sdk\bindings\c++\src\sign.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\sign.obj
+D:\quantacore-sdk\bindings\c++\src\random.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\random.obj
+D:\quantacore-sdk\bindings\c++\src\hash.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\hash.obj
+D:\quantacore-sdk\bindings\c++\src\keys.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\keys.obj
+D:\quantacore-sdk\bindings\c++\src\utils.cpp;D:\quantacore-sdk\bindings\c++\build\quac100pp_static.dir\Release\utils.obj

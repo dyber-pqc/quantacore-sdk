@@ -1,0 +1,34 @@
+@PACKAGE_INIT@
+
+# ==============================================================================
+# QUAC TLS CMake Package Configuration
+# ==============================================================================
+#
+# Provides: quac_tls::quac_tls target
+#
+# Usage in CMakeLists.txt:
+#   find_package(quac_tls REQUIRED)
+#   target_link_libraries(myapp PRIVATE quac_tls::quac_tls)
+#
+# Variables set:
+#   quac_tls_FOUND       - TRUE if found
+#   quac_tls_VERSION     - Version string
+#   quac_tls_INCLUDE_DIR - Include directory
+#   quac_tls_LIBRARY     - Library path
+#
+# ==============================================================================
+
+include(CMakeFindDependencyMacro)
+
+# Dependencies
+find_dependency(OpenSSL REQUIRED)
+find_dependency(Threads REQUIRED)
+
+# Import targets
+include("${CMAKE_CURRENT_LIST_DIR}/quac_tls-targets.cmake")
+
+# Set variables for compatibility
+get_target_property(quac_tls_INCLUDE_DIR quac_tls::quac_tls INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(quac_tls_LIBRARY quac_tls::quac_tls LOCATION)
+
+check_required_components(quac_tls)

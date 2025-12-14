@@ -1,0 +1,6 @@
+QUAC100_1.0 {
+    global:
+        OSSL_provider_init;
+    local:
+        *;
+};

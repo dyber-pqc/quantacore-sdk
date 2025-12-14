@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{63EE6D57-8D1E-3617-9E65-4E1374B835B7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>quac100pp_static</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\quantacore-sdk\bindings\c++\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">quac100pp_static.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">quac100pp</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\quantacore-sdk\bindings\c++\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">quac100pp_static.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">quac100pp</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\quantacore-sdk\bindings\c++\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">quac100pp_static.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">quac100pp</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\quantacore-sdk\bindings\c++\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">quac100pp_static.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">quac100pp</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying quac100.dll to output directory</Message>
+      <Command>setlocal
+C:\mingw64\bin\cmake.exe -E copy_if_different D:/quantacore-sdk/bindings/c/build/Release/quac100.dll D:/quantacore-sdk/bindings/c++/build/Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying quac100.dll to output directory</Message>
+      <Command>setlocal
+C:\mingw64\bin\cmake.exe -E copy_if_different D:/quantacore-sdk/bindings/c/build/Release/quac100.dll D:/quantacore-sdk/bindings/c++/build/Release
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying quac100.dll to output directory</Message>
+      <Command>setlocal
+C:\mingw64\bin\cmake.exe -E copy_if_different D:/quantacore-sdk/bindings/c/build/Release/quac100.dll D:/quantacore-sdk/bindings/c++/build/MinSizeRel
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\quantacore-sdk\bindings\c++\include;D:\quantacore-sdk\bindings\c++\src;D:\quantacore-sdk\bindings\c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying quac100.dll to output directory</Message>
+      <Command>setlocal
+C:\mingw64\bin\cmake.exe -E copy_if_different D:/quantacore-sdk/bindings/c/build/Release/quac100.dll D:/quantacore-sdk/bindings/c++/build/RelWithDebInfo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\quantacore-sdk\bindings\c++\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/quantacore-sdk/bindings/c++/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/c++ -BD:/quantacore-sdk/bindings/c++/build --check-stamp-file D:/quantacore-sdk/bindings/c++/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\mingw64\share\cmake-3.29\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompilerABI.cpp;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakePackageConfigHelpers.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeRCCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystem.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CompilerId\VS-10.vcxproj.in;C:\mingw64\share\cmake-3.29\Modules\GNUInstallDirs.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\FeatureTesting.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Determine-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\mingw64\share\cmake-3.29\Modules\WriteBasicConfigVersionFile.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeCXXCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeRCCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeSystem.cmake;D:\quantacore-sdk\bindings\c++\cmake\quac100ppConfig.cmake.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\quantacore-sdk\bindings\c++\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/quantacore-sdk/bindings/c++/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/c++ -BD:/quantacore-sdk/bindings/c++/build --check-stamp-file D:/quantacore-sdk/bindings/c++/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\mingw64\share\cmake-3.29\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompilerABI.cpp;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakePackageConfigHelpers.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeRCCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystem.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CompilerId\VS-10.vcxproj.in;C:\mingw64\share\cmake-3.29\Modules\GNUInstallDirs.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\FeatureTesting.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Determine-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\mingw64\share\cmake-3.29\Modules\WriteBasicConfigVersionFile.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeCXXCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeRCCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeSystem.cmake;D:\quantacore-sdk\bindings\c++\cmake\quac100ppConfig.cmake.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\quantacore-sdk\bindings\c++\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/quantacore-sdk/bindings/c++/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/c++ -BD:/quantacore-sdk/bindings/c++/build --check-stamp-file D:/quantacore-sdk/bindings/c++/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\mingw64\share\cmake-3.29\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompilerABI.cpp;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakePackageConfigHelpers.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeRCCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystem.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CompilerId\VS-10.vcxproj.in;C:\mingw64\share\cmake-3.29\Modules\GNUInstallDirs.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\FeatureTesting.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Determine-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\mingw64\share\cmake-3.29\Modules\WriteBasicConfigVersionFile.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeCXXCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeRCCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeSystem.cmake;D:\quantacore-sdk\bindings\c++\cmake\quac100ppConfig.cmake.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\quantacore-sdk\bindings\c++\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/quantacore-sdk/bindings/c++/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/c++ -BD:/quantacore-sdk/bindings/c++/build --check-stamp-file D:/quantacore-sdk/bindings/c++/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\mingw64\share\cmake-3.29\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXCompilerABI.cpp;C:\mingw64\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakePackageConfigHelpers.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeRCCompiler.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystem.cmake.in;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCXXCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake;C:\mingw64\share\cmake-3.29\Modules\CMakeTestRCCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\mingw64\share\cmake-3.29\Modules\CompilerId\VS-10.vcxproj.in;C:\mingw64\share\cmake-3.29\Modules\GNUInstallDirs.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\mingw64\share\cmake-3.29\Modules\Internal\FeatureTesting.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Determine-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\mingw64\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\mingw64\share\cmake-3.29\Modules\WriteBasicConfigVersionFile.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeCXXCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeRCCompiler.cmake;D:\quantacore-sdk\bindings\c++\build\CMakeFiles\3.29.3\CMakeSystem.cmake;D:\quantacore-sdk\bindings\c++\cmake\quac100ppConfig.cmake.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\quantacore-sdk\bindings\c++\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\quac100.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\device.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\kem.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\sign.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\random.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\hash.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\keys.cpp" />
+    <ClCompile Include="D:\quantacore-sdk\bindings\c++\src\utils.cpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\quac100.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\types.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\exception.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\device.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\kem.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\sign.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\random.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\hash.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\keys.hpp" />
+    <ClInclude Include="D:\quantacore-sdk\bindings\c++\include\quac100\utils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\quantacore-sdk\bindings\c++\build\ZERO_CHECK.vcxproj">
+      <Project>{91A83EE9-B0F5-3702-9C72-7C7F47ADFEEA}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

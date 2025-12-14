@@ -1,0 +1,191 @@
+# QUAC 100 OpenSSL Configuration Example
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+#
+# This configuration file shows how to enable the QUAC 100 provider
+# for transparent post-quantum cryptographic acceleration.
+#
+# Installation:
+#   1. Copy this file to /etc/ssl/openssl-quac100.cnf (or merge with existing)
+#   2. Set OPENSSL_CONF=/etc/ssl/openssl-quac100.cnf
+#   3. Or use: openssl -config /path/to/openssl-quac100.cnf
+#
+# The provider will automatically use QUAC 100 hardware if available,
+# falling back to software simulation otherwise.
+
+# =============================================================================
+# OpenSSL Configuration
+# =============================================================================
+
+openssl_conf = openssl_init
+
+[openssl_init]
+providers = provider_sect
+alg_section = algorithm_sect
+
+# =============================================================================
+# Provider Configuration
+# =============================================================================
+
+[provider_sect]
+# Default provider (for classical algorithms)
+default = default_sect
+
+# QUAC 100 provider (for PQC algorithms)
+quac100 = quac100_sect
+
+# Legacy provider (optional, for older algorithms)
+# legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[quac100_sect]
+# Path to the QUAC 100 provider shared library
+# Adjust this path based on your installation
+module = /usr/local/lib/ossl-modules/quac100.so
+
+# Automatically activate the provider
+activate = 1
+
+# Provider-specific configuration
+# identity = quac100
+# buildinfo = QUAC 100 PQC Accelerator
+
+# [legacy_sect]
+# activate = 1
+
+# =============================================================================
+# Algorithm Configuration
+# =============================================================================
+
+[algorithm_sect]
+# Set default properties for algorithm selection
+# This prefers QUAC 100 provider for supported algorithms
+default_properties = ?provider=quac100
+
+# =============================================================================
+# SSL/TLS Configuration (for applications using SSL_CTX)
+# =============================================================================
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+# Minimum TLS version
+MinProtocol = TLSv1.2
+
+# Enable hybrid key exchange (classical + PQC)
+# Groups = x25519_mlkem768:x25519:secp384r1
+
+# Signature algorithms (include ML-DSA)
+# SignatureAlgorithms = ML-DSA-65:ECDSA+SHA384:RSA-PSS+SHA384
+
+# =============================================================================
+# Certificate Configuration
+# =============================================================================
+
+[req]
+default_bits = 3072
+default_md = sha384
+distinguished_name = req_distinguished_name
+x509_extensions = v3_ca
+string_mask = utf8only
+
+[req_distinguished_name]
+countryName = Country Name (2 letter code)
+countryName_default = US
+stateOrProvinceName = State or Province Name
+localityName = Locality Name
+0.organizationName = Organization Name
+organizationalUnitName = Organizational Unit Name
+commonName = Common Name
+emailAddress = Email Address
+
+[v3_ca]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[v3_intermediate_ca]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[v3_end_entity]
+basicConstraints = CA:FALSE
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth, clientAuth
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+
+# =============================================================================
+# PQC-Specific Extensions (for hybrid certificates)
+# =============================================================================
+
+[pqc_extensions]
+# Alternative public key for PQC (dual-key certificates)
+# subjectAltPublicKeyInfo = critical, @pqc_alt_key
+
+# [pqc_alt_key]
+# algorithm = ML-DSA-65
+# publicKey = <base64-encoded-public-key>
+
+# =============================================================================
+# Environment Variables
+# =============================================================================
+
+# The following environment variables affect provider behavior:
+#
+# OPENSSL_MODULES       - Directory containing provider modules
+#                         Default: /usr/local/lib/ossl-modules
+#
+# OPENSSL_CONF          - Path to this configuration file
+#
+# QUAC_DEVICE           - QUAC 100 device index (default: 0)
+#                         Set to "simulator" to force software mode
+#
+# QUAC_LOG_LEVEL        - Logging verbosity (0=off, 1=error, 2=warn, 3=info, 4=debug)
+#
+# QUAC_FIPS_MODE        - Enable FIPS mode (1=enabled, 0=disabled)
+
+# =============================================================================
+# Usage Examples
+# =============================================================================
+
+# Generate ML-KEM keypair:
+#   openssl genpkey -algorithm ML-KEM-768 -out mlkem768.key
+#
+# Generate ML-DSA keypair:
+#   openssl genpkey -algorithm ML-DSA-65 -out mldsa65.key
+#
+# Create self-signed certificate with ML-DSA:
+#   openssl req -new -x509 -key mldsa65.key -out cert.pem -days 365
+#
+# List available PQC algorithms:
+#   openssl list -kem-algorithms -provider quac100
+#   openssl list -signature-algorithms -provider quac100
+#
+# Test QRNG:
+#   openssl rand -provider quac100 -hex 32
+#
+# Benchmark ML-KEM:
+#   openssl speed -provider quac100 mlkem768
+
+# =============================================================================
+# Troubleshooting
+# =============================================================================
+
+# If provider fails to load:
+#   1. Verify module path: ls -la /usr/local/lib/ossl-modules/quac100.so
+#   2. Check dependencies: ldd /usr/local/lib/ossl-modules/quac100.so
+#   3. Test loading: openssl list -providers -provider-path /usr/local/lib/ossl-modules -provider quac100
+#
+# If hardware not detected:
+#   1. Check PCIe device: lspci | grep -i quac
+#   2. Verify driver: ls /dev/quac*
+#   3. Check permissions: groups $USER (should include 'quac' or 'crypto')
+#
+# For debug output:
+#   QUAC_LOG_LEVEL=4 openssl list -providers -provider quac100

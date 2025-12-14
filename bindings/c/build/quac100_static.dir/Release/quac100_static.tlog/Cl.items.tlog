@@ -1,0 +1,9 @@
+D:\quantacore-sdk\bindings\c\src\quac100.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\quac100.obj
+D:\quantacore-sdk\bindings\c\src\device.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\device.obj
+D:\quantacore-sdk\bindings\c\src\kem.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\kem.obj
+D:\quantacore-sdk\bindings\c\src\sign.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\sign.obj
+D:\quantacore-sdk\bindings\c\src\random.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\random.obj
+D:\quantacore-sdk\bindings\c\src\hash.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\hash.obj
+D:\quantacore-sdk\bindings\c\src\keys.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\keys.obj
+D:\quantacore-sdk\bindings\c\src\utils.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\utils.obj
+D:\quantacore-sdk\bindings\c\src\hal.c;D:\quantacore-sdk\bindings\c\build\quac100_static.dir\Release\hal.obj

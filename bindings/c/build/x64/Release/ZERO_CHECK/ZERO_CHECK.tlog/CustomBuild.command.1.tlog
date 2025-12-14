@@ -1,0 +1,10 @@
+^D:\QUANTACORE-SDK\BINDINGS\C\BUILD\CMAKEFILES\3748C4BFB1802F316E465BF9C2F61585\GENERATE.STAMP.RULE
+setlocal
+C:\mingw64\bin\cmake.exe -SD:/quantacore-sdk/bindings/c -BD:/quantacore-sdk/bindings/c/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/quantacore-sdk/bindings/c/build/quac100.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
