@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# QuantaCore QUAC 100 Post-Quantum Cryptographic Accelerator
+# Linux Kernel Driver - Kbuild
+#
+# Copyright (C) 2025 Dyber, Inc. All Rights Reserved.
+#
+
+# Module name
+obj-m := quac100.o
+
+# Source files
+quac100-y := quac100_main.o \
+             quac100_pcie.o \
+             quac100_dma.o \
+             quac100_ioctl.o \
+             quac100_irq.o \
+             quac100_sriov.o \
+             quac100_sysfs.o
+
+# Compiler flags
+ccflags-y := -I$(src)
+ccflags-y += -Wall -Wextra
+ccflags-y += -Wno-unused-parameter
+
+# Debug build
+ifdef CONFIG_DEBUG_INFO
+ccflags-y += -g -DDEBUG
+endif
+
+# Enable additional warnings for development
+ifdef QUAC100_STRICT
+ccflags-y += -Werror
+ccflags-y += -Wcast-align
+ccflags-y += -Wformat=2
+ccflags-y += -Wmissing-prototypes
+endif

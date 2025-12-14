@@ -1,0 +1,90 @@
+#!/bin/bash
+#=============================================================================
+# QUAC 100 DKMS Package - Pre-Removal Script
+#
+# This script runs before the package is removed.
+# It unloads the module, stops services, and removes from DKMS.
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+#=============================================================================
+
+set -e
+
+DKMS_NAME="quac100"
+DKMS_VERSION="1.0.0"
+
+case "$1" in
+    remove|upgrade|deconfigure)
+        echo "Preparing to remove QUAC 100 driver..."
+        
+        #---------------------------------------------------------------------
+        # Unload Module
+        #---------------------------------------------------------------------
+        
+        echo "Unloading QUAC 100 module..."
+        if lsmod | grep -q "^quac100"; then
+            # Try graceful unload first
+            if ! modprobe -r quac100 2>/dev/null; then
+                echo "Warning: Module is in use. Forcing removal..."
+                rmmod -f quac100 2>/dev/null || true
+            fi
+        else
+            echo "Module not loaded"
+        fi
+        
+        #---------------------------------------------------------------------
+        # Stop Systemd Service
+        #---------------------------------------------------------------------
+        
+        echo "Stopping systemd service..."
+        if command -v systemctl >/dev/null 2>&1; then
+            systemctl stop quac100.service 2>/dev/null || true
+            systemctl disable quac100.service 2>/dev/null || true
+        fi
+        
+        #---------------------------------------------------------------------
+        # Remove from DKMS
+        #---------------------------------------------------------------------
+        
+        echo "Removing QUAC 100 from DKMS..."
+        if command -v dkms >/dev/null 2>&1; then
+            # Get list of installed kernels for this module
+            dkms status -m ${DKMS_NAME} -v ${DKMS_VERSION} 2>/dev/null | while read -r line; do
+                # Extract kernel version from status line
+                kernel=$(echo "$line" | grep -oP '\d+\.\d+\.\d+-\d+-\w+' | head -1)
+                if [ -n "$kernel" ]; then
+                    echo "Removing module for kernel ${kernel}..."
+                    dkms uninstall -m ${DKMS_NAME} -v ${DKMS_VERSION} -k "${kernel}" 2>/dev/null || true
+                fi
+            done
+            
+            # Remove DKMS registration completely
+            dkms remove -m ${DKMS_NAME} -v ${DKMS_VERSION} --all 2>/dev/null || true
+        fi
+        
+        #---------------------------------------------------------------------
+        # Cleanup Module Files
+        #---------------------------------------------------------------------
+        
+        echo "Cleaning up module files..."
+        # Remove any leftover module files
+        find /lib/modules -name "quac100.ko*" -delete 2>/dev/null || true
+        
+        # Update module dependencies
+        if command -v depmod >/dev/null 2>&1; then
+            depmod -a 2>/dev/null || true
+        fi
+        
+        echo "QUAC 100 driver removal preparation complete"
+        ;;
+    
+    failed-upgrade)
+        ;;
+    
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

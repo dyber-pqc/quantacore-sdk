@@ -412,7 +412,7 @@ Create `debian/control`:
 Source: libquac100
 Section: libs
 Priority: optional
-Maintainer: Dyber Inc <support@dyber.io>
+Maintainer: Dyber Inc <support@dyber.org>
 Build-Depends: debhelper (>= 10), cmake (>= 3.16)
 Standards-Version: 4.5.0
 Homepage: https://dyber.io
@@ -449,7 +449,7 @@ Release:        1%{?dist}
 Summary:        QUAC 100 Post-Quantum Cryptographic Accelerator SDK
 
 License:        Apache-2.0
-URL:            https://dyber.io
+URL:            https://dyber.org
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  cmake >= 3.16
@@ -495,8 +495,8 @@ Create `Formula/quac100.rb`:
 ```ruby
 class Quac100 < Formula
   desc "QUAC 100 Post-Quantum Cryptographic Accelerator SDK"
-  homepage "https://dyber.io"
-  url "https://github.com/dyber-io/quac100-sdk/archive/v1.0.0.tar.gz"
+  homepage "https://dyber.org"
+  url "https://github.com/dyber-pqc/quac100-sdk/archive/v1.0.0.tar.gz"
   sha256 "<sha256-hash>"
   license "Apache-2.0"
 
@@ -529,7 +529,7 @@ Submit to [homebrew-core](https://github.com/Homebrew/homebrew-core) or create a
 
 ```bash
 # Create your own tap
-brew tap dyber-io/tap
+brew tap dyber-pqc/tap
 brew install dyber-io/tap/quac100
 ```
 

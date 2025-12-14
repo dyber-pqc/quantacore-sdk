@@ -1,0 +1,159 @@
+#!/bin/bash
+#=============================================================================
+# QUAC 100 DKMS Package - Post-Installation Script
+#
+# This script runs after the package is installed.
+# It registers the driver with DKMS, builds it for the current kernel,
+# and loads the module.
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+#=============================================================================
+
+set -e
+
+DKMS_NAME="quac100"
+DKMS_VERSION="1.0.0"
+
+case "$1" in
+    configure)
+        echo "Configuring QUAC 100 driver..."
+        
+        #---------------------------------------------------------------------
+        # DKMS Registration and Build
+        #---------------------------------------------------------------------
+        
+        if [ -d "/usr/src/${DKMS_NAME}-${DKMS_VERSION}" ]; then
+            echo "Registering QUAC 100 with DKMS..."
+            
+            # Remove any existing registration (upgrade scenario)
+            dkms remove -m ${DKMS_NAME} -v ${DKMS_VERSION} --all 2>/dev/null || true
+            
+            # Add module to DKMS
+            dkms add -m ${DKMS_NAME} -v ${DKMS_VERSION} 2>/dev/null || true
+            
+            # Build for current kernel
+            echo "Building QUAC 100 driver for kernel $(uname -r)..."
+            if dkms build -m ${DKMS_NAME} -v ${DKMS_VERSION}; then
+                echo "Build successful"
+            else
+                echo "Warning: Build failed. You may need to install kernel headers."
+                echo "Try: sudo apt-get install linux-headers-$(uname -r)"
+            fi
+            
+            # Install the module
+            echo "Installing QUAC 100 driver..."
+            if dkms install -m ${DKMS_NAME} -v ${DKMS_VERSION} --force; then
+                echo "Installation successful"
+            else
+                echo "Warning: Installation failed."
+            fi
+        else
+            echo "Warning: DKMS source directory not found"
+        fi
+        
+        #---------------------------------------------------------------------
+        # Udev Rules Reload
+        #---------------------------------------------------------------------
+        
+        echo "Reloading udev rules..."
+        if command -v udevadm >/dev/null 2>&1; then
+            udevadm control --reload-rules || true
+            udevadm trigger || true
+        fi
+        
+        #---------------------------------------------------------------------
+        # Systemd Service Setup
+        #---------------------------------------------------------------------
+        
+        echo "Configuring systemd service..."
+        if command -v systemctl >/dev/null 2>&1; then
+            systemctl daemon-reload || true
+            systemctl enable quac100.service 2>/dev/null || true
+        fi
+        
+        #---------------------------------------------------------------------
+        # Module Signing Check (Secure Boot)
+        #---------------------------------------------------------------------
+        
+        if command -v mokutil >/dev/null 2>&1; then
+            if mokutil --sb-state 2>/dev/null | grep -q "SecureBoot enabled"; then
+                echo ""
+                echo "==============================================="
+                echo " SECURE BOOT DETECTED"
+                echo "==============================================="
+                echo ""
+                echo "Secure Boot is enabled on this system."
+                echo "The QUAC 100 driver module must be signed"
+                echo "to load properly."
+                echo ""
+                echo "To sign the module:"
+                echo "  1. Generate signing keys (if not done):"
+                echo "     /usr/share/quac100/scripts/sign-module.sh --generate-keys"
+                echo ""
+                echo "  2. Enroll the key with MOK:"
+                echo "     sudo mokutil --import /path/to/signing_key.der"
+                echo ""
+                echo "  3. Reboot and complete MOK enrollment"
+                echo ""
+                echo "  4. Sign the module:"
+                echo "     /usr/share/quac100/scripts/sign-module.sh"
+                echo ""
+                echo "See /usr/share/doc/quac100-dkms/README.md for details."
+                echo "==============================================="
+            fi
+        fi
+        
+        #---------------------------------------------------------------------
+        # Load Module
+        #---------------------------------------------------------------------
+        
+        echo "Loading QUAC 100 module..."
+        if modprobe quac100 2>/dev/null; then
+            echo "Module loaded successfully"
+            
+            # Check if device is detected
+            if [ -d "/sys/class/quac100" ]; then
+                echo ""
+                echo "QUAC 100 device(s) detected:"
+                ls -1 /sys/class/quac100/ 2>/dev/null || true
+            else
+                echo ""
+                echo "Note: No QUAC 100 hardware detected."
+                echo "The driver is loaded but waiting for hardware."
+            fi
+        else
+            echo ""
+            echo "Warning: Could not load module."
+            echo "This may be normal if:"
+            echo "  - No QUAC 100 hardware is present"
+            echo "  - Secure Boot requires module signing"
+            echo "  - Kernel headers are not installed"
+        fi
+        
+        #---------------------------------------------------------------------
+        # Installation Complete
+        #---------------------------------------------------------------------
+        
+        echo ""
+        echo "==============================================="
+        echo " QUAC 100 Driver Installation Complete"
+        echo "==============================================="
+        echo ""
+        echo "Driver version: ${DKMS_VERSION}"
+        echo "DKMS status: $(dkms status ${DKMS_NAME} 2>/dev/null || echo 'Not registered')"
+        echo ""
+        echo "Documentation: /usr/share/doc/quac100-dkms/"
+        echo "Scripts: /usr/share/quac100/scripts/"
+        echo ""
+        ;;
+    
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+    
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

@@ -90,19 +90,6 @@ extern "C"
      * Base structure for all batch operations. Cast to specific types
      * for type-safe access.
      */
-    typedef struct quac_batch_item_s
-    {
-        quac_batch_op_t operation;  /**< Operation type */
-        quac_algorithm_t algorithm; /**< Algorithm */
-        quac_result_t result;       /**< Individual result code */
-        void *user_data;            /**< User context */
-        uint32_t flags;             /**< Item flags */
-        uint8_t reserved[12];       /**< Reserved */
-    } quac_batch_item_t;
-
-    /**
-     * @brief Batch item flags
-     */
     typedef enum quac_batch_item_flags_e
     {
         QUAC_BATCH_ITEM_FLAG_NONE = 0x0000,

@@ -1,0 +1,33 @@
+Source: quac100-dkms
+Section: kernel
+Priority: optional
+Maintainer: Dyber Inc <support@dyber.io>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.5.0
+Homepage: https://www.dyber.io/quantacore
+Vcs-Git: https://github.com/dyber/quantacore-sdk.git
+Vcs-Browser: https://github.com/dyber/quantacore-sdk
+
+Package: quac100-dkms
+Architecture: all
+Depends: ${misc:Depends}, dkms (>= 2.2.0), linux-headers-generic | linux-headers-amd64 | linux-headers, build-essential
+Recommends: mokutil
+Suggests: quac100-doc
+Description: QUAC 100 Post-Quantum Cryptographic Accelerator Driver (DKMS)
+ The QUAC 100 is a PCIe-based post-quantum cryptographic accelerator
+ supporting NIST standardized algorithms for post-quantum cryptography.
+ .
+ Supported algorithms:
+  - ML-KEM (Kyber): 512, 768, 1024 parameter sets
+  - ML-DSA (Dilithium): Level 2, 3, 5
+  - SLH-DSA (SPHINCS+): 128s/f, 192s/f, 256s/f
+ .
+ Features:
+  - Hardware quantum random number generation (2 Gbps)
+  - PCIe Gen4 x8 interface with DMA
+  - MSI-X interrupts (up to 32 vectors)
+  - SR-IOV virtualization (up to 16 VFs)
+  - FIPS 140-3 compliant operation mode
+ .
+ This package contains the DKMS source for automatic compilation
+ against your running kernel.

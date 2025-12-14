@@ -508,7 +508,7 @@ extern "C"
     /**
      * @brief Log callback function
      */
-    typedef void(QUAC100_CALL *quac_log_callback_t)(
+    typedef void(QUAC100_CALL *quac_diag_log_callback_t)(
         const quac_log_entry_t *entry,
         void *user_data);
 

@@ -1,0 +1,88 @@
+#!/usr/bin/make -f
+#=============================================================================
+# QUAC 100 DKMS Package - Debian Rules File
+#
+# This file controls how the Debian package is built.
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+#=============================================================================
+
+# Enable hardening flags
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# Package name and version
+PACKAGE_NAME = quac100-dkms
+DKMS_NAME = quac100
+VERSION = $(shell dpkg-parsechangelog -S Version | cut -d- -f1)
+
+# Directories
+DESTDIR = debian/$(PACKAGE_NAME)
+DKMS_SRC = $(DESTDIR)/usr/src/$(DKMS_NAME)-$(VERSION)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	# No configuration needed for DKMS package
+
+override_dh_auto_build:
+	# No build needed - DKMS handles building
+
+override_dh_auto_test:
+	# Skip tests during package build
+
+override_dh_auto_install:
+	# Create directories
+	install -d $(DKMS_SRC)
+	install -d $(DESTDIR)/etc/modprobe.d
+	install -d $(DESTDIR)/etc/udev/rules.d
+	install -d $(DESTDIR)/lib/systemd/system
+	install -d $(DESTDIR)/usr/share/doc/$(PACKAGE_NAME)
+	install -d $(DESTDIR)/usr/share/quac100/scripts
+	
+	# Install DKMS source files
+	install -m 644 src/*.c $(DKMS_SRC)/
+	install -m 644 src/*.h $(DKMS_SRC)/
+	install -m 644 src/Makefile $(DKMS_SRC)/
+	install -m 644 src/Kbuild $(DKMS_SRC)/
+	install -m 644 dkms/dkms.conf $(DKMS_SRC)/
+	
+	# Update version in dkms.conf
+	sed -i 's/PACKAGE_VERSION="[^"]*"/PACKAGE_VERSION="$(VERSION)"/' $(DKMS_SRC)/dkms.conf
+	
+	# Install configuration files
+	install -m 644 modprobe/quac100.conf $(DESTDIR)/etc/modprobe.d/
+	install -m 644 udev/99-quac100.rules $(DESTDIR)/etc/udev/rules.d/
+	install -m 644 systemd/quac100.service $(DESTDIR)/lib/systemd/system/
+	
+	# Install documentation
+	install -m 644 README.md $(DESTDIR)/usr/share/doc/$(PACKAGE_NAME)/
+	
+	# Install scripts
+	install -m 755 scripts/*.sh $(DESTDIR)/usr/share/quac100/scripts/ || true
+
+override_dh_installdocs:
+	dh_installdocs
+	# Add additional documentation if needed
+
+override_dh_installchangelogs:
+	dh_installchangelogs
+
+override_dh_compress:
+	dh_compress -X.pdf -X.txt
+
+override_dh_fixperms:
+	dh_fixperms
+	# Ensure scripts are executable
+	chmod +x $(DESTDIR)/usr/share/quac100/scripts/*.sh 2>/dev/null || true
+
+override_dh_dkms:
+	dh_dkms -V $(VERSION)
+
+override_dh_clean:
+	dh_clean
+	rm -rf build/
+
+.PHONY: override_dh_auto_configure override_dh_auto_build override_dh_auto_test \
+        override_dh_auto_install override_dh_installdocs override_dh_installchangelogs \
+        override_dh_compress override_dh_fixperms override_dh_dkms override_dh_clean

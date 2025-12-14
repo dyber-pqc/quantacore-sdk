@@ -1,0 +1,130 @@
+#
+# QUAC 100 Post-Quantum Cryptographic Accelerator - Systemd Service
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+# Document: QUAC100-SDK-DEV-001
+#
+# This service manages the QUAC 100 kernel driver initialization,
+# device setup, and health monitoring.
+#
+# Installation:
+#   sudo cp quac100.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable quac100.service
+#   sudo systemctl start quac100.service
+#
+
+[Unit]
+Description=QUAC 100 Post-Quantum Cryptographic Accelerator Service
+Documentation=man:quac100(7)
+Documentation=https://docs.dyber.org/quac100
+
+# Dependencies
+After=local-fs.target
+After=systemd-modules-load.service
+After=systemd-udevd.service
+Requires=systemd-udevd.service
+
+# Hardware detection
+ConditionPathExists=/sys/bus/pci/drivers/quac100
+ConditionKernelCommandLine=!quac100.disable
+
+# Don't start if in maintenance mode
+ConditionPathExists=!/var/run/quac100.maintenance
+
+# Ordering with other crypto services
+Before=cryptsetup.target
+Before=remote-fs.target
+
+# Wants networking for remote management (optional)
+Wants=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# Environment configuration
+EnvironmentFile=-/etc/default/quac100
+EnvironmentFile=-/etc/sysconfig/quac100
+
+# Working directory for any temporary files
+WorkingDirectory=/var/lib/quac100
+
+# Create runtime directory
+RuntimeDirectory=quac100
+RuntimeDirectoryMode=0755
+
+# Pre-start: Load kernel module if not already loaded
+ExecStartPre=/bin/sh -c 'modprobe quac100 || true'
+
+# Pre-start: Wait for udev to settle and create device nodes
+ExecStartPre=/usr/bin/udevadm settle --timeout=30
+
+# Pre-start: Verify device is present
+ExecStartPre=/bin/sh -c 'test -e /dev/quac100_0 || (echo "QUAC 100 device not found" && exit 1)'
+
+# Main initialization script
+ExecStart=/usr/lib/quac100/quac100-init.sh start
+
+# Run FIPS self-tests if required
+ExecStartPost=-/usr/lib/quac100/quac100-selftest.sh
+
+# Health check after start
+ExecStartPost=-/usr/lib/quac100/quac100-health.sh
+
+# Reload configuration
+ExecReload=/usr/lib/quac100/quac100-init.sh reload
+
+# Stop sequence
+ExecStop=/usr/lib/quac100/quac100-init.sh stop
+
+# Post-stop: Zeroize sensitive memory (security requirement)
+ExecStopPost=-/usr/lib/quac100/quac100-zeroize.sh
+
+# Timeout settings
+TimeoutStartSec=120
+TimeoutStopSec=60
+
+# Restart policy
+Restart=on-failure
+RestartSec=10
+RestartPreventExitStatus=SIGTERM
+
+# Resource limits
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+
+# Security hardening
+NoNewPrivileges=false
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=false
+ProtectKernelModules=false
+ProtectControlGroups=true
+
+# Allow access to /dev for device management
+PrivateDevices=false
+DevicePolicy=auto
+DeviceAllow=/dev/quac100_* rw
+
+# Capabilities required for device management
+CapabilityBoundingSet=CAP_SYS_ADMIN CAP_SYS_RAWIO CAP_IPC_LOCK CAP_NET_ADMIN
+AmbientCapabilities=CAP_SYS_ADMIN CAP_SYS_RAWIO CAP_IPC_LOCK
+
+# System call filtering (allow crypto and device operations)
+SystemCallFilter=@system-service @privileged @module
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=quac100
+SyslogFacility=daemon
+SyslogLevel=info
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=cryptsetup.target
+
+# Also start for encrypted storage
+WantedBy=local-fs-pre.target

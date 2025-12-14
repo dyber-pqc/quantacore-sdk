@@ -1,0 +1,209 @@
+#
+# QUAC 100 Post-Quantum Cryptographic Accelerator - udev Rules
+#
+# Copyright 2025 Dyber, Inc. All Rights Reserved.
+# Document: QUAC100-SDK-DEV-001
+#
+# This file configures device permissions, naming, and automatic setup
+# for QUAC 100 cryptographic accelerator devices.
+#
+# Installation:
+#   sudo cp 99-quac100.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules
+#   sudo udevadm trigger
+#
+# Device nodes created:
+#   /dev/quac100_N     - Main device interface (N = device index)
+#   /dev/quac100_N_dma - DMA interface (if separate)
+#
+# Access control:
+#   Devices are owned by root:quac100 with mode 0660
+#   Add users to the 'quac100' group for access:
+#     sudo usermod -aG quac100 <username>
+#
+
+#------------------------------------------------------------------------------
+# Create quac100 group if it doesn't exist
+#------------------------------------------------------------------------------
+# Note: Group creation should be done by the installation script,
+# but this provides a fallback using systemd-sysusers if available.
+
+#------------------------------------------------------------------------------
+# QUAC 100 PCI Device Identification
+#------------------------------------------------------------------------------
+# Vendor ID: 0x1DYB (Dyber, Inc. - placeholder)
+# Device ID: 0x0100 (QUAC 100)
+
+# Match QUAC 100 PCI devices and bind to driver
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    TAG+="systemd", ENV{SYSTEMD_WANTS}+="quac100.service"
+
+# Set PCI device attributes for optimal performance
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ATTR{msi_bus}="1", \
+    ATTR{enable}="1"
+
+#------------------------------------------------------------------------------
+# Character Device Rules (main interface)
+#------------------------------------------------------------------------------
+
+# Match QUAC 100 character devices
+KERNEL=="quac100_[0-9]*", SUBSYSTEM=="quac100", \
+    GROUP="quac100", MODE="0660", \
+    TAG+="uaccess", TAG+="systemd", \
+    SYMLINK+="crypto/quac100/%n"
+
+# Alternative: Match by major number if using misc device
+# KERNEL=="quac100", SUBSYSTEM=="misc", \
+#     GROUP="quac100", MODE="0660"
+
+#------------------------------------------------------------------------------
+# DMA Device Rules
+#------------------------------------------------------------------------------
+
+# DMA buffer device nodes (if using separate interface)
+KERNEL=="quac100_[0-9]*_dma", SUBSYSTEM=="quac100", \
+    GROUP="quac100", MODE="0660", \
+    TAG+="uaccess"
+
+#------------------------------------------------------------------------------
+# Device Naming and Symlinks
+#------------------------------------------------------------------------------
+
+# Create persistent symlinks by serial number
+SUBSYSTEM=="quac100", ENV{ID_SERIAL}!="", \
+    SYMLINK+="quac100/by-serial/$env{ID_SERIAL}"
+
+# Create symlinks by PCI path for consistent naming
+SUBSYSTEM=="quac100", KERNELS=="????:??:??.?", \
+    SYMLINK+="quac100/by-path/pci-$kernel"
+
+# Create symlink by hardware revision
+SUBSYSTEM=="quac100", ATTR{revision}!="", \
+    SYMLINK+="quac100/by-revision/rev$attr{revision}-%n"
+
+#------------------------------------------------------------------------------
+# Memory and I/O Configuration
+#------------------------------------------------------------------------------
+
+# Enable write-combining for DMA buffers (performance optimization)
+SUBSYSTEM=="quac100", KERNEL=="quac100_[0-9]*", \
+    ATTR{resource0_wc}="1"
+
+# Set maximum read request size for PCIe (4KB optimal for crypto workloads)
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ATTR{max_read_request_size}="4096"
+
+#------------------------------------------------------------------------------
+# Power Management
+#------------------------------------------------------------------------------
+
+# Disable runtime power management for consistent performance
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ATTR{power/control}="on"
+
+# Alternative: Enable ASPM for power saving (uncomment if preferred)
+# SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+#     ATTR{link/l1_aspm}="1"
+
+#------------------------------------------------------------------------------
+# Hugepages Configuration (for DMA performance)
+#------------------------------------------------------------------------------
+
+# Allow the quac100 group to lock memory for DMA
+# Note: Also requires /etc/security/limits.d configuration
+SUBSYSTEM=="quac100", \
+    RUN+="/bin/sh -c 'echo 256 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages 2>/dev/null || true'"
+
+#------------------------------------------------------------------------------
+# NUMA Awareness
+#------------------------------------------------------------------------------
+
+# Set NUMA node affinity for the device (if on multi-socket system)
+# This helps ensure DMA buffers are allocated from the correct NUMA node
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ENV{QUAC100_NUMA_NODE}="$attr{numa_node}"
+
+#------------------------------------------------------------------------------
+# Security: SELinux/AppArmor Labels
+#------------------------------------------------------------------------------
+
+# SELinux context (if SELinux is enabled)
+SUBSYSTEM=="quac100", \
+    SECLABEL{selinux}="system_u:object_r:crypto_device_t:s0"
+
+#------------------------------------------------------------------------------
+# Initialization Scripts
+#------------------------------------------------------------------------------
+
+# Run initialization when device is added
+SUBSYSTEM=="quac100", ACTION=="add", KERNEL=="quac100_[0-9]*", \
+    RUN+="/usr/lib/quac100/quac100-hotplug.sh add %k"
+
+# Run cleanup when device is removed
+SUBSYSTEM=="quac100", ACTION=="remove", KERNEL=="quac100_[0-9]*", \
+    RUN+="/usr/lib/quac100/quac100-hotplug.sh remove %k"
+
+#------------------------------------------------------------------------------
+# Health Monitoring Triggers
+#------------------------------------------------------------------------------
+
+# Trigger health check on certain events
+SUBSYSTEM=="quac100", ACTION=="change", ENV{QUAC100_EVENT}=="health", \
+    RUN+="/usr/lib/quac100/quac100-health.sh %k"
+
+# Log temperature warnings
+SUBSYSTEM=="quac100", ACTION=="change", ENV{QUAC100_TEMP_WARN}=="1", \
+    RUN+="/usr/bin/logger -t quac100 -p daemon.warning 'Temperature warning on device %k'"
+
+# Log tamper alerts (critical security event)
+SUBSYSTEM=="quac100", ACTION=="change", ENV{QUAC100_TAMPER}=="1", \
+    RUN+="/usr/bin/logger -t quac100 -p daemon.crit 'TAMPER ALERT on device %k'", \
+    RUN+="/usr/lib/quac100/quac100-tamper-response.sh %k"
+
+#------------------------------------------------------------------------------
+# SR-IOV Virtual Functions
+#------------------------------------------------------------------------------
+
+# Virtual function devices (SR-IOV)
+KERNEL=="quac100_[0-9]*_vf[0-9]*", SUBSYSTEM=="quac100", \
+    GROUP="quac100", MODE="0660", \
+    TAG+="uaccess", \
+    SYMLINK+="crypto/quac100/vf/%n"
+
+# Physical function with VF management
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ATTR{sriov_numvfs}!="", \
+    RUN+="/bin/sh -c 'echo $attr{sriov_totalvfs} > /sys/class/quac100/max_vfs 2>/dev/null || true'"
+
+#------------------------------------------------------------------------------
+# Container/Virtualization Support
+#------------------------------------------------------------------------------
+
+# Allow device access in containers (cgroup v2)
+SUBSYSTEM=="quac100", TAG+="container"
+
+# VFIO passthrough preparation
+SUBSYSTEM=="pci", ATTR{vendor}=="0x1DYB", ATTR{device}=="0x0100", \
+    ENV{QUAC100_VFIO_READY}="1"
+
+#------------------------------------------------------------------------------
+# Debug and Development
+#------------------------------------------------------------------------------
+
+# Enable debug mode if requested (via kernel parameter or env)
+SUBSYSTEM=="quac100", ENV{QUAC100_DEBUG}=="1", \
+    RUN+="/bin/sh -c 'echo 7 > /sys/class/quac100/%k/debug_level 2>/dev/null || true'"
+
+# Create debug symlink
+SUBSYSTEM=="quac100", ENV{QUAC100_DEBUG}=="1", \
+    SYMLINK+="quac100-debug-%n"
+
+#------------------------------------------------------------------------------
+# Import additional vendor-specific rules
+#------------------------------------------------------------------------------
+IMPORT{program}="/usr/lib/quac100/quac100-udev-helper %k"
+
+#------------------------------------------------------------------------------
+# End of QUAC 100 udev rules
+#------------------------------------------------------------------------------

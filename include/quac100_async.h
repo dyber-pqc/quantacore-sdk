@@ -56,19 +56,6 @@ extern "C"
      *=============================================================================*/
 
     /**
-     * @brief Async job status
-     */
-    typedef enum quac_job_status_e
-    {
-        QUAC_JOB_STATUS_PENDING = 0,   /**< Job is queued, waiting to execute */
-        QUAC_JOB_STATUS_RUNNING = 1,   /**< Job is currently executing */
-        QUAC_JOB_STATUS_COMPLETED = 2, /**< Job completed successfully */
-        QUAC_JOB_STATUS_FAILED = 3,    /**< Job failed with error */
-        QUAC_JOB_STATUS_CANCELLED = 4, /**< Job was cancelled */
-        QUAC_JOB_STATUS_TIMEOUT = 5,   /**< Job timed out */
-    } quac_job_status_t;
-
-    /**
      * @brief Async operation type
      */
     typedef enum quac_async_op_e
@@ -95,41 +82,7 @@ extern "C"
         QUAC_PRIORITY_CRITICAL = 3, /**< Critical priority (preemptive) */
     } quac_job_priority_t;
 
-    /**
-     * @brief Detailed job information
-     */
-    typedef struct quac_job_info_s
-    {
-        uint32_t struct_size;         /**< Size of this structure */
-        quac_job_id_t job_id;         /**< Job identifier */
-        quac_job_status_t status;     /**< Current status */
-        quac_async_op_t operation;    /**< Operation type */
-        quac_algorithm_t algorithm;   /**< Algorithm (if applicable) */
-        quac_job_priority_t priority; /**< Job priority */
-        quac_result_t result;         /**< Result code (if completed) */
-
-        /* Timing information (nanoseconds since epoch) */
-        uint64_t submit_time;   /**< When job was submitted */
-        uint64_t start_time;    /**< When execution started (0 if pending) */
-        uint64_t complete_time; /**< When job completed (0 if not done) */
-
-        /* Derived timing (microseconds) */
-        uint32_t queue_time_us; /**< Time spent in queue */
-        uint32_t exec_time_us;  /**< Execution time */
-        uint32_t total_time_us; /**< Total time from submit to complete */
-
-        /* Progress (for long-running operations) */
-        uint32_t progress_percent; /**< Progress 0-100 (if supported) */
-        uint64_t bytes_processed;  /**< Bytes processed so far */
-        uint64_t bytes_total;      /**< Total bytes to process */
-
-        /* User context */
-        void *user_data; /**< User-provided context */
-
-        /* Error detail */
-        char error_detail[128]; /**< Error message if failed */
-    } quac_job_info_t;
-
+    
     /*=============================================================================
      * Callback Types
      *=============================================================================*/
