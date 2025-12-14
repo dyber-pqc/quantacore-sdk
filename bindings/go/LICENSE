@@ -1,0 +1,121 @@
+DYBER, INC. PROPRIETARY SOFTWARE LICENSE AGREEMENT
+
+Copyright (c) 2025 Dyber, Inc. All Rights Reserved.
+
+IMPORTANT: READ THIS LICENSE AGREEMENT CAREFULLY BEFORE USING THIS SOFTWARE.
+
+1. DEFINITIONS
+
+"Software" means the QUAC 100 Go SDK, including all source code, object code,
+libraries, documentation, and related materials provided by Dyber, Inc.
+
+"Licensor" means Dyber, Inc., a Delaware corporation.
+
+"Licensee" means the individual or entity that has obtained a valid license
+to use the Software.
+
+"Hardware" means the QUAC 100 Post-Quantum Cryptographic Accelerator device
+manufactured by Dyber, Inc.
+
+2. LICENSE GRANT
+
+Subject to the terms and conditions of this Agreement and upon purchase of
+a valid license, Licensor grants Licensee a non-exclusive, non-transferable,
+limited license to:
+
+  a) Use the Software solely in conjunction with authorized Dyber Hardware;
+  b) Integrate the Software into Licensee's applications;
+  c) Distribute Licensee's applications that incorporate the Software,
+     provided such applications require authorized Dyber Hardware to function.
+
+3. RESTRICTIONS
+
+Licensee shall NOT:
+
+  a) Copy, modify, or create derivative works of the Software, except as
+     expressly permitted in Section 2;
+  b) Reverse engineer, disassemble, decompile, or otherwise attempt to
+     derive the source code of the Software;
+  c) Remove, alter, or obscure any proprietary notices on the Software;
+  d) Sublicense, rent, lease, sell, or transfer the Software to any third
+     party without prior written consent from Licensor;
+  e) Use the Software for any unlawful purpose or in violation of any
+     applicable laws or regulations;
+  f) Use the Software to develop competing products or services;
+  g) Use the Software without valid, authorized Dyber Hardware;
+  h) Distribute the Software as a standalone product.
+
+4. INTELLECTUAL PROPERTY
+
+The Software is protected by copyright laws and international treaties.
+Licensor retains all right, title, and interest in and to the Software,
+including all intellectual property rights therein. This Agreement does
+not grant Licensee any rights to patents, copyrights, trade secrets,
+trademarks, or any other rights in respect to the Software.
+
+5. CONFIDENTIALITY
+
+Licensee acknowledges that the Software contains valuable trade secrets
+and proprietary information of Licensor. Licensee agrees to maintain the
+confidentiality of the Software and not to disclose it to any third party
+without the prior written consent of Licensor.
+
+6. WARRANTY DISCLAIMER
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. LICENSOR DOES NOT
+WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED.
+
+7. LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+IN NO EVENT SHALL LICENSOR'S TOTAL LIABILITY TO LICENSEE FOR ALL DAMAGES
+EXCEED THE AMOUNT PAID BY LICENSEE FOR THE SOFTWARE LICENSE.
+
+8. EXPORT COMPLIANCE
+
+Licensee acknowledges that the Software may be subject to export control
+laws and regulations. Licensee agrees to comply with all applicable export
+laws and regulations, including the U.S. Export Administration Regulations
+(EAR) and International Traffic in Arms Regulations (ITAR).
+
+9. TERM AND TERMINATION
+
+This Agreement is effective until terminated. Licensor may terminate this
+Agreement immediately upon written notice if Licensee breaches any provision
+of this Agreement. Upon termination, Licensee must destroy all copies of
+the Software in its possession.
+
+10. GOVERNING LAW
+
+This Agreement shall be governed by and construed in accordance with the
+laws of the State of Delaware, without regard to its conflict of law
+provisions. Any disputes arising under this Agreement shall be resolved
+in the state or federal courts located in Delaware.
+
+11. ENTIRE AGREEMENT
+
+This Agreement constitutes the entire agreement between the parties with
+respect to the Software and supersedes all prior or contemporaneous
+understandings regarding such subject matter.
+
+12. CONTACT INFORMATION
+
+For licensing inquiries, please contact:
+
+Dyber, Inc.
+Email: licensing@dyber.org
+Web: https://dyber.org
+
+---
+
+BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT,
+UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.

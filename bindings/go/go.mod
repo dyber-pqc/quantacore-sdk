@@ -1,5 +1,4 @@
-// D:\quantacore-sdk\bindings\go\go.mod
-module github.com/dyber-io/quac100-go
+module github.com/dyber-pqc/quantacore-sdk/bindings/go
 
 go 1.21
 
