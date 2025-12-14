@@ -80,12 +80,12 @@ The **QUAC 100** is a PCIe-based Hardware Security Module (HSM) designed specifi
 
 | Specification | Details |
 |---------------|---------|
-| **Form Factor** | PCIe Gen4 x8 half-height, half-length |
+| **Form Factor** | PCIe Gen4 x16 full-height, full-length |
 | **Interface** | PCIe 4.0 (16 GT/s per lane, ~16 GB/s total) |
 | **Memory** | 64 MB on-chip SRAM + 256 secure key slots |
 | **Power** | 25W typical, 35W maximum |
 | **Operating Temp** | 0°C to 70°C |
-| **Certifications** | FIPS 140-3 Level 3, Common Criteria EAL4+ |
+| **Certifications** | FIPS 140-3 Level 3 Certification-Pending, Common Criteria EAL4+ |
 
 ### Cryptographic Engines
 

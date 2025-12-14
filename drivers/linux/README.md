@@ -54,7 +54,7 @@ drivers/linux/
 │   │   └── quac100-dkms.spec
 │   └── build-packages.sh
 ├── testing/                      # Test suite
-│   └── test_driver_no_hw_v2.sh   # Hardware-independent tests
+│   └── test_driver_no_hw.sh   # Hardware-independent tests
 ├── README.md                     # This file
 ├── LICENSE                       # Driver license
 └── CHANGELOG.md                  # Version history
@@ -215,7 +215,7 @@ The driver includes a comprehensive test suite that validates the SDK headers, c
 
 ```bash
 cd testing/
-./test_driver_no_hw_v2.sh --all
+./test_driver_no_hw.sh --all
 ```
 
 **Test Categories:**
@@ -236,7 +236,7 @@ cd testing/
 
 With QUAC 100 hardware installed:
 ```bash
-./test_driver_no_hw_v2.sh --hardware
+./test_driver_no_hw.sh --hardware
 ```
 
 ## Uninstallation
