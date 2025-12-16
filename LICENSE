@@ -1,60 +1,248 @@
+DYBER, INC. SOFTWARE LICENSE AGREEMENT
+
 Copyright (c) 2025 Dyber, Inc. All Rights Reserved.
 
-PROPRIETARY SOFTWARE LICENSE AGREEMENT
+IMPORTANT - READ CAREFULLY: This Software License Agreement ("Agreement") is a 
+legal agreement between you (either an individual or a single entity) and 
+Dyber, Inc. ("Dyber") for the QUAC 100 Windows Driver software product, which 
+includes computer software and may include associated media, printed materials, 
+and "online" or electronic documentation ("Software").
 
-This software and associated documentation files (the "Software") are the
-proprietary property of Dyber, Inc. and are protected by copyright law and
-international treaties.
+BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND 
+BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS 
+AGREEMENT, DO NOT INSTALL OR USE THE SOFTWARE.
 
-GRANT OF LICENSE
+================================================================================
+1. GRANT OF LICENSE
+================================================================================
 
-Subject to the terms and conditions of this Agreement, Dyber, Inc. grants you
-a non-exclusive, non-transferable, limited license to use the Software solely
-in conjunction with Dyber hardware products for which the Software was designed.
+Subject to the terms and conditions of this Agreement, Dyber grants you a 
+non-exclusive, non-transferable, limited license to:
 
-RESTRICTIONS
+a) INTERNAL USE: Install and use the Software solely in connection with 
+   Dyber QUAC 100 hardware devices that you have lawfully purchased or licensed.
 
-You may not:
+b) DEVELOPMENT: Use the Software, including header files and libraries, to 
+   develop applications that interface with QUAC 100 hardware.
 
-1. Copy, modify, or distribute the Software except as expressly permitted;
-2. Reverse engineer, decompile, or disassemble the Software;
-3. Remove or alter any proprietary notices, labels, or marks on the Software;
-4. Use the Software for any unlawful purpose;
-5. Sublicense, rent, lease, or lend the Software to any third party;
-6. Use the Software to develop competing products.
+c) DISTRIBUTION: Distribute the runtime components of the Software (DLLs) as 
+   part of your applications, provided that:
+   - Your application requires QUAC 100 hardware to function
+   - You do not modify the runtime components
+   - You include all copyright notices and this license agreement
+   - Your distribution is not for the primary purpose of distributing the 
+     Software itself
 
-CONFIDENTIALITY
+d) BACKUP: Make one copy of the Software solely for backup or archival purposes.
 
-The Software contains trade secrets and proprietary information of Dyber, Inc.
-You agree to maintain the confidentiality of the Software and not disclose it
-to any third party without Dyber's prior written consent.
+================================================================================
+2. RESTRICTIONS
+================================================================================
 
-NO WARRANTY
+You may NOT:
 
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+a) Modify, translate, adapt, or create derivative works based upon the Software 
+   or any part thereof, except as expressly permitted for integration purposes.
 
-LIMITATION OF LIABILITY
+b) Reverse engineer, disassemble, decompile, or otherwise attempt to derive the 
+   source code of the Software, except to the extent expressly permitted by 
+   applicable law notwithstanding this limitation.
 
-IN NO EVENT SHALL DYBER, INC. BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH THIS
-AGREEMENT OR THE USE OF THE SOFTWARE.
+c) Rent, lease, loan, sell, sublicense, distribute, or otherwise transfer the 
+   Software or any rights therein to any third party, except as expressly 
+   permitted herein.
 
-TERMINATION
+d) Remove, alter, or obscure any proprietary notices, labels, or marks on the 
+   Software or any copies thereof.
 
-This license is effective until terminated. Your rights under this license will
-terminate automatically without notice if you fail to comply with any of its
-terms. Upon termination, you must destroy all copies of the Software.
+e) Use the Software for any unlawful purpose or in violation of any applicable 
+   laws or regulations.
 
-GOVERNING LAW
+f) Use the Software with hardware other than genuine Dyber QUAC 100 devices or 
+   authorized evaluation systems.
 
-This Agreement shall be governed by and construed in accordance with the laws
-of the State of Delaware, United States of America.
+g) Distribute the kernel-mode driver (quac100.sys) separately from QUAC 100 
+   hardware or complete product installations.
 
-CONTACT
+h) Use the Software to create competing products or services.
 
-For licensing inquiries:
+================================================================================
+3. INTELLECTUAL PROPERTY RIGHTS
+================================================================================
+
+The Software is protected by copyright laws, international copyright treaties, 
+and other intellectual property laws and treaties. Dyber and its licensors 
+retain all right, title, and interest in and to the Software, including all 
+copyrights, patents, trade secrets, trademarks, and other intellectual property 
+rights therein.
+
+This Agreement does not grant you any rights to trademarks, service marks, or 
+trade names of Dyber. You may not use the name "Dyber," "QUAC," or "QuantaCore" 
+or any other trademarks of Dyber in any advertising, publicity, or promotional 
+materials without Dyber's prior written consent.
+
+================================================================================
+4. CONFIDENTIALITY
+================================================================================
+
+You acknowledge that the Software contains valuable trade secrets and 
+confidential information belonging to Dyber. You agree to maintain the 
+confidentiality of the Software using at least the same degree of care that 
+you use to protect your own confidential information, but in no event less 
+than reasonable care.
+
+You shall not disclose, publish, or otherwise reveal any confidential 
+information contained in or relating to the Software to any third party 
+without Dyber's prior written consent.
+
+================================================================================
+5. TERM AND TERMINATION
+================================================================================
+
+This Agreement is effective until terminated. Your rights under this Agreement 
+will terminate automatically without notice from Dyber if you fail to comply 
+with any term of this Agreement. Upon termination, you must destroy all copies 
+of the Software in your possession or control.
+
+Sections 3, 4, 6, 7, 8, and 9 shall survive any termination of this Agreement.
+
+================================================================================
+6. DISCLAIMER OF WARRANTIES
+================================================================================
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT.
+
+DYBER DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS, THAT 
+THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT 
+DEFECTS IN THE SOFTWARE WILL BE CORRECTED.
+
+THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH YOU.
+
+SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE 
+ABOVE EXCLUSION MAY NOT APPLY TO YOU.
+
+================================================================================
+7. LIMITATION OF LIABILITY
+================================================================================
+
+IN NO EVENT SHALL DYBER OR ITS LICENSORS BE LIABLE FOR ANY SPECIAL, INCIDENTAL, 
+INDIRECT, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES WHATSOEVER (INCLUDING, 
+WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, 
+LOSS OF BUSINESS INFORMATION, LOSS OF DATA, OR ANY OTHER PECUNIARY LOSS) 
+ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF DYBER HAS 
+BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+IN ANY CASE, DYBER'S ENTIRE LIABILITY UNDER ANY PROVISION OF THIS AGREEMENT 
+SHALL BE LIMITED TO THE AMOUNT ACTUALLY PAID BY YOU FOR THE SOFTWARE OR THE 
+ASSOCIATED HARDWARE, WHICHEVER IS GREATER.
+
+SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR 
+INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATION OR EXCLUSION MAY 
+NOT APPLY TO YOU.
+
+================================================================================
+8. EXPORT RESTRICTIONS
+================================================================================
+
+The Software may be subject to export control laws and regulations. You agree 
+to comply with all applicable export and re-export restrictions and regulations, 
+including but not limited to the U.S. Export Administration Regulations (EAR) 
+and sanctions programs administered by the Office of Foreign Assets Control 
+(OFAC).
+
+You represent and warrant that you are not located in, under the control of, 
+or a national or resident of any country to which export of the Software is 
+prohibited.
+
+The Software contains cryptographic functionality and may require export 
+licenses for distribution outside the United States. You are responsible for 
+obtaining any required export licenses.
+
+================================================================================
+9. GOVERNMENT RIGHTS
+================================================================================
+
+If the Software is being acquired by or on behalf of the U.S. Government or 
+by a U.S. Government prime contractor or subcontractor, the Software is 
+provided with RESTRICTED RIGHTS. Use, duplication, or disclosure by the 
+Government is subject to restrictions as set forth in subparagraph (c)(1)(ii) 
+of the Rights in Technical Data and Computer Software clause at DFARS 
+252.227-7013 or subparagraphs (c)(1) and (2) of the Commercial Computer 
+Software - Restricted Rights at 48 CFR 52.227-19, as applicable.
+
+================================================================================
+10. THIRD-PARTY COMPONENTS
+================================================================================
+
+The Software may include third-party software components that are subject to 
+separate license terms. Such third-party components are identified in the 
+THIRD_PARTY_LICENSES file included with the Software. Your use of such 
+components is subject to the terms and conditions of the applicable third-party 
+licenses.
+
+================================================================================
+11. SUPPORT AND UPDATES
+================================================================================
+
+This Agreement does not entitle you to any support, maintenance, updates, 
+upgrades, or new versions of the Software. Dyber may, at its sole discretion, 
+offer support, maintenance, and updates under separate agreements.
+
+================================================================================
+12. GENERAL PROVISIONS
+================================================================================
+
+a) ENTIRE AGREEMENT: This Agreement constitutes the entire agreement between 
+   you and Dyber concerning the Software and supersedes all prior or 
+   contemporaneous oral or written communications, proposals, and 
+   representations with respect to its subject matter.
+
+b) AMENDMENT: This Agreement may not be modified or amended except by a written 
+   instrument signed by both parties.
+
+c) WAIVER: The failure of either party to enforce any right or provision of 
+   this Agreement shall not constitute a waiver of such right or provision.
+
+d) SEVERABILITY: If any provision of this Agreement is held to be invalid or 
+   unenforceable, the remaining provisions shall continue in full force and 
+   effect.
+
+e) ASSIGNMENT: You may not assign or transfer this Agreement or any rights 
+   granted hereunder without Dyber's prior written consent. Any attempted 
+   assignment in violation of this provision shall be void.
+
+f) GOVERNING LAW: This Agreement shall be governed by and construed in 
+   accordance with the laws of the State of California, United States, without 
+   regard to its conflict of laws principles. Any legal action or proceeding 
+   arising under this Agreement shall be brought exclusively in the federal or 
+   state courts located in San Francisco County, California.
+
+g) NOTICES: Any notices required or permitted under this Agreement shall be in 
+   writing and shall be deemed given when delivered personally, sent by 
+   certified mail (return receipt requested), or sent by overnight courier to:
+
+   Dyber, Inc.
+   Legal Department
+   
+   Email: legal@dyber.org
+
+================================================================================
+13. CONTACT INFORMATION
+================================================================================
+
+If you have any questions about this Agreement, please contact:
+
 Dyber, Inc.
-Email: legal@dyber.org
 Website: https://dyber.org
+Email: support@dyber.org
+GitHub: https://github.com/dyber-pqc/quantacore-sdk
+
+================================================================================
+
+BY INSTALLING OR USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS 
+AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.
+
+Last Updated: December 2025
+Version: 1.0
