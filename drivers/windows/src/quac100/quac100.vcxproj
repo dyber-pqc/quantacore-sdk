@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D488B9AC-1762-471F-8E3E-736376AE3D1B}</ProjectGuid>
+    <TemplateGuid>{dd38f7fc-d7bd-488b-9242-7d8754cde80d}</TemplateGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <Configuration>Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <RootNamespace>quac100</RootNamespace>
+    <DriverType>KMDF</DriverType>
+    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+    <KMDF_VERSION_MAJOR>1</KMDF_VERSION_MAJOR>
+    <KMDF_VERSION_MINOR>33</KMDF_VERSION_MINOR>
+  </PropertyGroup>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <TargetVersion>Windows11</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <TargetVersion>Windows11</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <TargetVersion>Windows11</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <TargetVersion>Windows11</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>DBG=1;QUAC_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\common;$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WppEnabled>true</WppEnabled>
+      <WppScanConfigurationData>$(ProjectDir)driver\trace.h</WppScanConfigurationData>
+      <WppSearchPath>$(ProjectDir)driver</WppSearchPath>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precomp.h</PrecompiledHeaderFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\common;$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WppEnabled>true</WppEnabled>
+      <WppScanConfigurationData>$(ProjectDir)driver\trace.h</WppScanConfigurationData>
+      <WppSearchPath>$(ProjectDir)driver</WppSearchPath>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precomp.h</PrecompiledHeaderFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <FilesToPackage Include="$(TargetPath)" />
+    <FilesToPackage Include="$(OutputPath)quac100.pdb" />
+    <FilesToPackage Include="@(Inf->'%(CopyOutput)')" Condition="'@(Inf)'!=''" />
+  </ItemGroup>
+
+  <!-- Driver Core -->
+  <ItemGroup>
+    <ClCompile Include="driver\driver.c" />
+    <ClCompile Include="driver\device.c" />
+    <ClCompile Include="driver\queue.c" />
+    <ClCompile Include="driver\ioctl.c" />
+    <ClCompile Include="driver\precomp.c">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+  <!-- Hardware Abstraction -->
+  <ItemGroup>
+    <ClCompile Include="hw\pcie.c" />
+    <ClCompile Include="hw\dma.c" />
+    <ClCompile Include="hw\interrupt.c" />
+    <ClCompile Include="hw\registers.c" />
+  </ItemGroup>
+
+  <!-- Crypto Operations -->
+  <ItemGroup>
+    <ClCompile Include="crypto\qrng.c" />
+    <ClCompile Include="crypto\kem.c" />
+    <ClCompile Include="crypto\sign.c" />
+  </ItemGroup>
+
+  <!-- Async/Job Queue -->
+  <ItemGroup>
+    <ClCompile Include="async\jobqueue.c" />
+  </ItemGroup>
+
+  <!-- Power Management -->
+  <ItemGroup>
+    <ClCompile Include="power\power.c" />
+  </ItemGroup>
+
+  <!-- Diagnostics -->
+  <ItemGroup>
+    <ClCompile Include="diag\health.c" />
+    <ClCompile Include="diag\selftest.c" />
+  </ItemGroup>
+
+  <!-- Driver Headers -->
+  <ItemGroup>
+    <ClInclude Include="driver\driver.h" />
+    <ClInclude Include="driver\device.h" />
+    <ClInclude Include="driver\queue.h" />
+    <ClInclude Include="driver\ioctl.h" />
+    <ClInclude Include="driver\trace.h" />
+    <ClInclude Include="driver\precomp.h" />
+  </ItemGroup>
+
+  <!-- Hardware Headers -->
+  <ItemGroup>
+    <ClInclude Include="hw\pcie.h" />
+    <ClInclude Include="hw\dma.h" />
+    <ClInclude Include="hw\interrupt.h" />
+    <ClInclude Include="hw\registers.h" />
+  </ItemGroup>
+
+  <!-- Crypto Headers -->
+  <ItemGroup>
+    <ClInclude Include="crypto\qrng.h" />
+    <ClInclude Include="crypto\kem.h" />
+    <ClInclude Include="crypto\sign.h" />
+  </ItemGroup>
+
+  <!-- Async Headers -->
+  <ItemGroup>
+    <ClInclude Include="async\jobqueue.h" />
+  </ItemGroup>
+
+  <!-- Power Headers -->
+  <ItemGroup>
+    <ClInclude Include="power\power.h" />
+  </ItemGroup>
+
+  <!-- Common Headers -->
+  <ItemGroup>
+    <ClInclude Include="..\common\version.h" />
+  </ItemGroup>
+
+  <!-- Public Headers -->
+  <ItemGroup>
+    <ClInclude Include="..\..\include\quac100_public.h" />
+    <ClInclude Include="..\..\include\quac100_ioctl.h" />
+    <ClInclude Include="..\..\include\quac100_guid.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Inf Include="inf\quac100.inf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ResourceCompile Include="inf\quac100.rc" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

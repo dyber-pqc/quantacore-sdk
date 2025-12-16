@@ -408,7 +408,7 @@ public sealed class IncrementalHash : IDisposable
     /// <summary>
     /// Finalize and get hash value
     /// </summary>
-    public byte[] Finalize()
+    public byte[] GetHashAndReset()
     {
         ThrowIfDisposed();
 

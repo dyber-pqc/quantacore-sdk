@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    QUAC 100 HLK Test Playlist - Cryptographic Validation
+    
+    Tests specific to cryptographic operations and FIPS compliance.
+    
+    Copyright (c) 2025 Dyber, Inc. All Rights Reserved.
+-->
+<Playlist Version="1.0" Name="QUAC 100 Cryptographic Validation">
+  <Description>
+    Cryptographic algorithm validation tests for FIPS 140-3 and
+    NIST post-quantum cryptography standards compliance.
+  </Description>
+
+  <TestCategories>
+    <Category Name="KEM">
+      <Description>Key Encapsulation Mechanism (ML-KEM/Kyber) tests</Description>
+    </Category>
+    <Category Name="Signature">
+      <Description>Digital Signature (ML-DSA/Dilithium, SLH-DSA/SPHINCS+) tests</Description>
+    </Category>
+    <Category Name="QRNG">
+      <Description>Quantum Random Number Generator tests</Description>
+    </Category>
+    <Category Name="FIPS">
+      <Description>FIPS 140-3 compliance tests</Description>
+    </Category>
+  </TestCategories>
+
+  <Tests>
+    <!-- ================================================================== -->
+    <!-- ML-KEM (Kyber) Tests                                               -->
+    <!-- ================================================================== -->
+    
+    <Test Id="KEM.Kyber512.KAT" Category="KEM">
+      <n>ML-KEM-512 Known Answer Tests</n>
+      <Description>Validates ML-KEM-512 against NIST KAT vectors</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mlkem512.rsp</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="KEM.Kyber768.KAT" Category="KEM">
+      <n>ML-KEM-768 Known Answer Tests</n>
+      <Description>Validates ML-KEM-768 against NIST KAT vectors</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mlkem768.rsp</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="KEM.Kyber1024.KAT" Category="KEM">
+      <n>ML-KEM-1024 Known Answer Tests</n>
+      <Description>Validates ML-KEM-1024 against NIST KAT vectors</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mlkem1024.rsp</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="KEM.Roundtrip" Category="KEM">
+      <n>KEM Encapsulation/Decapsulation Roundtrip</n>
+      <Description>Verifies encaps/decaps produces matching shared secrets</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Iterations">10000</Parameter>
+        <Parameter Name="Algorithms">512,768,1024</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="KEM.InvalidInput" Category="KEM">
+      <n>KEM Invalid Input Handling</n>
+      <Description>Tests handling of malformed keys and ciphertexts</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- ML-DSA (Dilithium) Tests                                           -->
+    <!-- ================================================================== -->
+    
+    <Test Id="Sign.Dilithium2.KAT" Category="Signature">
+      <n>ML-DSA-44 Known Answer Tests</n>
+      <Description>Validates ML-DSA-44 (Dilithium2) against NIST KAT vectors</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mldsa44.rsp</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="Sign.Dilithium3.KAT" Category="Signature">
+      <n>ML-DSA-65 Known Answer Tests</n>
+      <Description>Validates ML-DSA-65 (Dilithium3) against NIST KAT vectors</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mldsa65.rsp</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="Sign.Dilithium5.KAT" Category="Signature">
+      <n>ML-DSA-87 Known Answer Tests</n>
+      <Description>Validates ML-DSA-87 (Dilithium5) against NIST KAT vectors</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="KATFile">kat/mldsa87.rsp</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="Sign.Roundtrip" Category="Signature">
+      <n>Signature Sign/Verify Roundtrip</n>
+      <Description>Verifies signatures can be verified correctly</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Iterations">1000</Parameter>
+        <Parameter Name="MessageSizes">0,1,32,1024,65536</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="Sign.Forgery" Category="Signature">
+      <n>Signature Forgery Detection</n>
+      <Description>Verifies modified signatures are rejected</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Iterations">1000</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="Sign.Context" Category="Signature">
+      <n>Signature Context Binding</n>
+      <Description>Verifies context string affects signature</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- SLH-DSA (SPHINCS+) Tests                                           -->
+    <!-- ================================================================== -->
+    
+    <Test Id="Sign.SPHINCS.KAT" Category="Signature">
+      <n>SLH-DSA Known Answer Tests</n>
+      <Description>Validates SLH-DSA (SPHINCS+) against NIST KAT vectors</Description>
+      <Duration>300</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Variants">128s,128f,192s,192f,256s,256f</Parameter>
+      </Parameters>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- QRNG Tests                                                         -->
+    <!-- ================================================================== -->
+    
+    <Test Id="QRNG.NIST" Category="QRNG">
+      <n>NIST SP 800-22 Statistical Tests</n>
+      <Description>Runs NIST randomness test suite on QRNG output</Description>
+      <Duration>600</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="SampleSize">1000000</Parameter>
+        <Parameter Name="Tests">all</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="QRNG.Health" Category="QRNG">
+      <n>QRNG Continuous Health Tests</n>
+      <Description>Validates continuous health monitoring per SP 800-90B</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="QRNG.Entropy" Category="QRNG">
+      <n>Entropy Estimation</n>
+      <Description>Estimates min-entropy of QRNG output</Description>
+      <Duration>300</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="SampleSize">10000000</Parameter>
+        <Parameter Name="MinEntropy">7.5</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="QRNG.Restart" Category="QRNG">
+      <n>QRNG Restart Tests</n>
+      <Description>Validates QRNG behavior across restarts</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Restarts">100</Parameter>
+      </Parameters>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- FIPS 140-3 Tests                                                   -->
+    <!-- ================================================================== -->
+    
+    <Test Id="FIPS.PowerOn" Category="FIPS">
+      <n>Power-On Self Tests</n>
+      <Description>Validates FIPS 140-3 required power-on self tests</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="FIPS.ConditionalTests" Category="FIPS">
+      <n>Conditional Self Tests</n>
+      <Description>Validates conditional self tests (pairwise consistency, etc.)</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="FIPS.Zeroization" Category="FIPS">
+      <n>Key Zeroization</n>
+      <Description>Verifies secure zeroization of sensitive data</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="FIPS.ErrorStates" Category="FIPS">
+      <n>Error State Handling</n>
+      <Description>Validates error state transitions per FIPS requirements</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+    </Test>
+
+  </Tests>
+
+  <TestSequence>
+    <Description>Recommended execution order for cryptographic validation</Description>
+    <Step Order="1" TestId="FIPS.PowerOn" />
+    <Step Order="2" TestId="KEM.Kyber512.KAT" />
+    <Step Order="3" TestId="KEM.Kyber768.KAT" />
+    <Step Order="4" TestId="KEM.Kyber1024.KAT" />
+    <Step Order="5" TestId="KEM.Roundtrip" />
+    <Step Order="6" TestId="KEM.InvalidInput" />
+    <Step Order="7" TestId="Sign.Dilithium2.KAT" />
+    <Step Order="8" TestId="Sign.Dilithium3.KAT" />
+    <Step Order="9" TestId="Sign.Dilithium5.KAT" />
+    <Step Order="10" TestId="Sign.Roundtrip" />
+    <Step Order="11" TestId="Sign.Forgery" />
+    <Step Order="12" TestId="Sign.Context" />
+    <Step Order="13" TestId="Sign.SPHINCS.KAT" />
+    <Step Order="14" TestId="QRNG.Health" />
+    <Step Order="15" TestId="QRNG.NIST" />
+    <Step Order="16" TestId="QRNG.Entropy" />
+    <Step Order="17" TestId="QRNG.Restart" />
+    <Step Order="18" TestId="FIPS.ConditionalTests" />
+    <Step Order="19" TestId="FIPS.Zeroization" />
+    <Step Order="20" TestId="FIPS.ErrorStates" />
+  </TestSequence>
+</Playlist>

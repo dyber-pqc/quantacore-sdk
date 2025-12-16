@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    QUAC 100 HLK Test Playlist - Quick Validation
+    
+    A minimal set of tests for quick validation during development.
+    Not sufficient for WHQL certification.
+    
+    Copyright (c) 2025 Dyber, Inc. All Rights Reserved.
+-->
+<Playlist Version="1.0" Name="QUAC 100 Quick Validation">
+  <Description>
+    Quick validation tests for development. Run before submitting PRs
+    or after making significant driver changes. Completes in ~30 minutes.
+  </Description>
+
+  <Tests>
+    <Test Id="DF.Inf" Category="Device Fundamentals">
+      <n>INF Syntax Check</n>
+      <Duration>5</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="DF.DevFund.PnPDTest.Quick" Category="Device Fundamentals">
+      <n>PnP Device Test (Quick)</n>
+      <Duration>10</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="DoSimpleIO">true</Parameter>
+        <Parameter Name="DoConcurrentIO">false</Parameter>
+        <Parameter Name="IOPeriod">10</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="PCI.BusConfig" Category="PCI">
+      <n>PCI Configuration Space Test</n>
+      <Duration>5</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="PCI.DMA.Quick" Category="PCI">
+      <n>DMA Verification Test (Quick)</n>
+      <Duration>15</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="TransferSizes">4096,65536</Parameter>
+        <Parameter Name="Iterations">10</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="PM.DevFund.DxState" Category="Power Management">
+      <n>D-State Transition Test</n>
+      <Duration>10</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="Sec.CodeIntegrity" Category="Security">
+      <n>Code Integrity Check</n>
+      <Duration>5</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="Perf.Basic" Category="Performance">
+      <n>Basic Performance Validation</n>
+      <Duration>30</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Iterations">100</Parameter>
+      </Parameters>
+    </Test>
+  </Tests>
+
+  <TestSequence>
+    <Step Order="1" TestId="DF.Inf" />
+    <Step Order="2" TestId="Sec.CodeIntegrity" />
+    <Step Order="3" TestId="PCI.BusConfig" />
+    <Step Order="4" TestId="DF.DevFund.PnPDTest.Quick" />
+    <Step Order="5" TestId="PCI.DMA.Quick" />
+    <Step Order="6" TestId="PM.DevFund.DxState" />
+    <Step Order="7" TestId="Perf.Basic" />
+  </TestSequence>
+</Playlist>

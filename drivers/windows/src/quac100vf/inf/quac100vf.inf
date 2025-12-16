@@ -1,0 +1,72 @@
+;
+; QUAC 100 VF Windows Driver INF
+; Copyright (c) 2024 Dyber, Inc. All rights reserved.
+;
+; Virtual Function (VF) driver for SR-IOV enabled QUAC 100 devices.
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider    = %ManufacturerName%
+CatalogFile = quac100vf.cat
+DriverVer   = 12/01/2024,1.0.0.0
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+quac100vf.sys = 1,,
+
+[Manufacturer]
+%ManufacturerName% = Standard,NTamd64.10.0...22000,NTarm64.10.0...22000
+
+; Windows 11 x64
+[Standard.NTamd64.10.0...22000]
+%DeviceDesc% = Quac100VF_Device, PCI\VEN_1DEF&DEV_1001&SUBSYS_00011DEF&REV_01
+
+; Windows 11 ARM64
+[Standard.NTarm64.10.0...22000]
+%DeviceDesc% = Quac100VF_Device, PCI\VEN_1DEF&DEV_1001&SUBSYS_00011DEF&REV_01
+
+; ================= Device Installation =================
+
+[Quac100VF_Device.NT]
+CopyFiles = Quac100VF_Device.NT.Copy
+AddReg    = Quac100VF_Device.NT.AddReg
+
+[Quac100VF_Device.NT.Copy]
+quac100vf.sys
+
+[Quac100VF_Device.NT.AddReg]
+HKR,,"DeviceType",0x00010001,0x00000022
+
+[Quac100VF_Device.NT.Services]
+AddService = quac100vf,%SPSVCINST_ASSOCSERVICE%,Quac100VF_Service_Inst
+
+[Quac100VF_Service_Inst]
+DisplayName    = %ServiceDesc%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\quac100vf.sys
+
+[Quac100VF_Device.NT.Wdf]
+KmdfService = quac100vf, Quac100VF_wdfsect
+
+[Quac100VF_wdfsect]
+KmdfLibraryVersion = 1.33
+
+; ================= Strings =================
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName       = "Dyber, Inc."
+DiskName               = "QUAC 100 VF Driver Installation Disk"
+DeviceDesc             = "QUAC 100 PQC Accelerator Virtual Function"
+ServiceDesc            = "QUAC 100 VF Driver Service"

@@ -35,7 +35,7 @@ public sealed class QuantumRandom : RandomNumberGenerator
     /// </summary>
     /// <param name="count">Number of bytes to generate</param>
     /// <returns>Random byte array</returns>
-    public byte[] GetBytes(int count)
+    public new byte[] GetBytes(int count)
     {
         ThrowIfDisposed();
 
@@ -158,7 +158,7 @@ public sealed class QuantumRandom : RandomNumberGenerator
     /// <summary>
     /// Generate a random 32-bit integer in range [0, maxValue)
     /// </summary>
-    public int GetInt32(int maxValue)
+    public new int GetInt32(int maxValue)
     {
         if (maxValue <= 0)
             throw new ArgumentOutOfRangeException(nameof(maxValue), "Max value must be positive");
@@ -169,7 +169,7 @@ public sealed class QuantumRandom : RandomNumberGenerator
     /// <summary>
     /// Generate a random 32-bit integer in range [minValue, maxValue)
     /// </summary>
-    public int GetInt32(int minValue, int maxValue)
+    public new int GetInt32(int minValue, int maxValue)
     {
         if (minValue >= maxValue)
             throw new ArgumentException("minValue must be less than maxValue");
@@ -296,7 +296,7 @@ public sealed class QuantumRandom : RandomNumberGenerator
     /// <summary>
     /// Shuffle a span in place using Fisher-Yates algorithm
     /// </summary>
-    public void Shuffle<T>(Span<T> span)
+    public new void Shuffle<T>(Span<T> span)
     {
         for (int i = span.Length - 1; i > 0; i--)
         {

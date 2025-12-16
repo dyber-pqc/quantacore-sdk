@@ -355,7 +355,7 @@ public sealed class Signer
     /// <summary>
     /// Batch sign multiple messages
     /// </summary>
-    public byte[][] SignBatch(KeyPair keyPair, ReadOnlySpan<byte>[] messages)
+    public byte[][] SignBatch(KeyPair keyPair, byte[][] messages)
     {
         if (keyPair.Algorithm is not SignatureAlgorithm algorithm)
             throw new ArgumentException("Key pair is not a signature key pair", nameof(keyPair));
@@ -373,7 +373,7 @@ public sealed class Signer
     /// <summary>
     /// Batch verify multiple signatures
     /// </summary>
-    public bool[] VerifyBatch(KeyPair keyPair, ReadOnlySpan<byte>[] messages, ReadOnlySpan<byte>[] signatures)
+    public bool[] VerifyBatch(KeyPair keyPair, byte[][] messages, byte[][] signatures)
     {
         if (messages.Length != signatures.Length)
             throw new ArgumentException("Messages and signatures arrays must have the same length");

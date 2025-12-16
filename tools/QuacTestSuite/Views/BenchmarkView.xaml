@@ -1,0 +1,242 @@
+<UserControl x:Class="QuacTestSuite.Views.BenchmarkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Configuration Panel -->
+        <Border Grid.Column="0" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,24,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Benchmark Configuration" FontSize="18" FontWeight="SemiBold" 
+                               Foreground="White" Margin="0,0,0,24"/>
+
+                    <!-- Algorithm Selection -->
+                    <TextBlock Text="ALGORITHMS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    
+                    <Border Background="#1A2D42" CornerRadius="8" Padding="16" Margin="0,0,0,20">
+                        <StackPanel>
+                            <TextBlock Text="Key Encapsulation (ML-KEM)" Foreground="#00B4D8" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <CheckBox x:Name="ChkKyber512" Content="Kyber-512 (NIST Level 1)" IsChecked="True" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkKyber768" Content="Kyber-768 (NIST Level 3)" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkKyber1024" Content="Kyber-1024 (NIST Level 5)" Foreground="White" Margin="0,4"/>
+                            
+                            <TextBlock Text="Digital Signatures (ML-DSA)" Foreground="#00B4D8" FontSize="12" FontWeight="SemiBold" Margin="0,20,0,10"/>
+                            <CheckBox x:Name="ChkDilithium2" Content="Dilithium-2 (NIST Level 2)" IsChecked="True" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkDilithium3" Content="Dilithium-3 (NIST Level 3)" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkDilithium5" Content="Dilithium-5 (NIST Level 5)" Foreground="White" Margin="0,4"/>
+                            
+                            <TextBlock Text="Hash-Based Signatures (SLH-DSA)" Foreground="#00B4D8" FontSize="12" FontWeight="SemiBold" Margin="0,20,0,10"/>
+                            <CheckBox x:Name="ChkSphincs128s" Content="SPHINCS+-128s" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkSphincs128f" Content="SPHINCS+-128f" Foreground="White" Margin="0,4"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Operations -->
+                    <TextBlock Text="OPERATIONS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <Border Background="#1A2D42" CornerRadius="8" Padding="16" Margin="0,0,0,20">
+                        <StackPanel>
+                            <CheckBox x:Name="ChkKeyGen" Content="Key Generation" IsChecked="True" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkEncaps" Content="Encapsulate / Sign" IsChecked="True" Foreground="White" Margin="0,4"/>
+                            <CheckBox x:Name="ChkDecaps" Content="Decapsulate / Verify" IsChecked="True" Foreground="White" Margin="0,4"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Iterations -->
+                    <TextBlock Text="ITERATIONS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbIterations" SelectedIndex="1" Margin="0,0,0,20">
+                        <ComboBoxItem Content="1,000"/>
+                        <ComboBoxItem Content="10,000"/>
+                        <ComboBoxItem Content="100,000"/>
+                        <ComboBoxItem Content="1,000,000"/>
+                    </ComboBox>
+
+                    <!-- Threads -->
+                    <TextBlock Text="CONCURRENT THREADS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <Slider x:Name="SliderThreads" Minimum="1" Maximum="16" Value="4" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="ThreadCountText" Text="4 threads" Foreground="#808080" FontSize="12" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                    <!-- Warmup -->
+                    <CheckBox x:Name="ChkWarmup" Content="Include warmup phase (recommended)" IsChecked="True" Foreground="White" Margin="0,0,0,24"/>
+
+                    <!-- Run Buttons -->
+                    <Button x:Name="BtnStart" Click="StartBenchmark_Click" 
+                            Background="#00D4AA" Foreground="#0A1628" FontWeight="SemiBold" 
+                            Padding="20,12" Height="Auto" MinHeight="48" Cursor="Hand" Margin="0,0,0,12">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Play" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Text="Start Benchmark" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="BtnStop" Click="StopBenchmark_Click" IsEnabled="False"
+                            Background="Transparent" BorderBrush="#FF4757" BorderThickness="1"
+                            Foreground="#FF4757" Padding="20,12" Height="Auto" MinHeight="48" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Stop" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Text="Stop" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Results Panel -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Progress Panel -->
+            <Border x:Name="ProgressPanel" Grid.Row="0" Background="#152232" CornerRadius="12" 
+                    Padding="24" Margin="0,0,0,24" Visibility="Collapsed">
+                <StackPanel>
+                    <Grid Margin="0,0,0,12">
+                        <TextBlock x:Name="ProgressText" Text="Running benchmark..." 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock x:Name="ProgressPercent" Text="0%" HorizontalAlignment="Right"
+                                   Foreground="#00D4AA" FontWeight="Bold" FontSize="16"/>
+                    </Grid>
+                    <ProgressBar x:Name="ProgressBar" Value="0" Maximum="100" Height="8" 
+                                 Background="#1A2D42" Foreground="#00D4AA"/>
+                    <Grid Margin="0,12,0,0">
+                        <TextBlock x:Name="ElapsedText" Text="Elapsed: 00:00" Foreground="#808080"/>
+                        <TextBlock x:Name="RemainingText" Text="Remaining: --:--" 
+                                   HorizontalAlignment="Right" Foreground="#808080"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Results Display -->
+            <Border Grid.Row="1" Background="#152232" CornerRadius="12" Padding="24">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <TextBlock Text="Benchmark Results" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+                        <Button x:Name="BtnExport" Click="ExportResults_Click" HorizontalAlignment="Right"
+                                Background="Transparent" BorderBrush="#00D4AA" BorderThickness="1"
+                                Foreground="#00D4AA" Padding="16,8" Cursor="Hand" IsEnabled="False">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="FileExport" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Export CSV" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Results DataGrid -->
+                    <DataGrid x:Name="ResultsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                              Background="Transparent" BorderThickness="0" GridLinesVisibility="Horizontal"
+                              HeadersVisibility="Column" RowBackground="#152232" AlternatingRowBackground="#1A2D42"
+                              HorizontalGridLinesBrush="#2A3F54" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Algorithm" Binding="{Binding Algorithm}" Width="180">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Operation" Binding="{Binding Operation}" Width="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#B0B0B0"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Ops/sec" Binding="{Binding OpsPerSec}" Width="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#2ED573"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Avg Latency" Binding="{Binding AvgLatency}" Width="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#B0B0B0"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="P99 Latency" Binding="{Binding P99Latency}" Width="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#B0B0B0"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Iterations" Binding="{Binding Iterations}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#7F8C9A"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Empty State -->
+                    <TextBlock x:Name="EmptyState" Grid.Row="1" 
+                               Text="Click 'Start Benchmark' to begin testing." 
+                               Foreground="#5A6C7D" FontSize="14" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Summary Panel -->
+            <Border x:Name="SummaryPanel" Grid.Row="2" Background="#152232" CornerRadius="12" 
+                    Padding="24" Margin="0,24,0,0" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="TOTAL OPERATIONS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TotalOps" Text="0" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="PEAK THROUGHPUT" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="PeakThroughput" Text="0 ops/s" FontSize="24" FontWeight="Bold" Foreground="#00D4AA"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="AVG LATENCY" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="AvgLatency" Text="0 µs" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="TOTAL TIME" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TotalTime" Text="0s" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,131 @@
+<UserControl x:Class="QuacTestSuite.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,0,24">
+
+            <!-- Device Settings -->
+            <Border Background="#152232" CornerRadius="12" Padding="20" Margin="0,0,0,24">
+                <StackPanel>
+                    <TextBlock Text="Device Settings" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,16"/>
+                    
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Device Mode" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="Select hardware or simulation mode" Foreground="#7F8C9A" FontSize="12"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Hardware"/>
+                            <ComboBoxItem Content="Simulator"/>
+                        </ComboBox>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Power Mode" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="Balance performance and power consumption" Foreground="#7F8C9A" FontSize="12"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" SelectedIndex="1">
+                            <ComboBoxItem Content="Power Saver"/>
+                            <ComboBoxItem Content="Balanced"/>
+                            <ComboBoxItem Content="Maximum Performance"/>
+                        </ComboBox>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Auto Health Check" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="Periodically run self-tests" Foreground="#7F8C9A" FontSize="12"/>
+                        </StackPanel>
+                        <ToggleButton Grid.Column="1" IsChecked="True" Style="{StaticResource MaterialDesignSwitchToggleButton}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Export Settings -->
+            <Border Background="#152232" CornerRadius="12" Padding="20" Margin="0,0,0,24">
+                <StackPanel>
+                    <TextBlock Text="Export Settings" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,16"/>
+                    
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Default Export Format" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="Format for benchmark reports" Foreground="#7F8C9A" FontSize="12"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="CSV"/>
+                            <ComboBoxItem Content="JSON"/>
+                            <ComboBoxItem Content="HTML"/>
+                        </ComboBox>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Export Path" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="C:\Users\Public\Documents\QuacTestSuite" Foreground="#7F8C9A" FontSize="12"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="Browse..." Background="Transparent" BorderBrush="#00D4AA" 
+                                BorderThickness="1" Foreground="#00D4AA" Padding="16,8" Height="Auto" MinHeight="36" Cursor="Hand"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- About -->
+            <Border Background="#152232" CornerRadius="12" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="About" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,16"/>
+                    
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="Application Version" Foreground="#7F8C9A"/>
+                        <TextBlock Text="1.0.0" Foreground="White" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="Driver Version" Foreground="#7F8C9A"/>
+                        <TextBlock Text="1.0.0" Foreground="White" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="SDK Version" Foreground="#7F8C9A"/>
+                        <TextBlock Text="1.0.0" Foreground="White" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,16">
+                        <TextBlock Text="Company" Foreground="#7F8C9A"/>
+                        <TextBlock Text="Dyber, Inc." Foreground="#00D4AA" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
+                    <TextBlock Text="Website: dyber.org" Foreground="#00B4D8" Cursor="Hand"/>
+                    <TextBlock Text="GitHub: github.com/dyber-pqc/quantacore-sdk" Foreground="#00B4D8" Cursor="Hand" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

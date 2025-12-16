@@ -1,0 +1,434 @@
+# ============================================================================
+# QuantaCore SDK - Comprehensive .gitignore
+# Dyber, Inc. - https://dyber.org
+# ============================================================================
+
+# ============================================================================
+# Operating System Files
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# IDE and Editor Files
+# ============================================================================
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.psess
+*.vsp
+*.vspx
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (CLion, PyCharm, IntelliJ, Rider)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+cmake-build-*/
+
+# Eclipse
+.project
+.cproject
+.settings/
+.metadata/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================================================
+# C/C++ Build Artifacts
+# ============================================================================
+*.o
+*.obj
+*.lo
+*.a
+*.la
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.i
+*.ii
+*.d
+*.dSYM/
+*.gch
+*.pch
+*.mod
+*.mod.c
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+build/
+_build/
+out/
+
+# Autotools
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+Makefile.in
+config.h.in
+config.log
+config.status
+libtool
+
+# ============================================================================
+# .NET / C# Build Artifacts
+# ============================================================================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET Core
+*.dotnet/
+*.tools/
+
+# Publish output
+publish/
+
+# ============================================================================
+# Python Build Artifacts
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+dist/
+build/
+eggs/
+*.egg
+*.egg-info/
+.eggs/
+sdist/
+wheels/
+share/python-wheels/
+*.manifest
+*.spec
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Cython
+*.c
+cython_debug/
+
+# ============================================================================
+# Rust Build Artifacts
+# ============================================================================
+target/
+**/*.rs.bk
+Cargo.lock
+
+# ============================================================================
+# Go Build Artifacts
+# ============================================================================
+*.test
+*.prof
+go.work
+
+# ============================================================================
+# Java Build Artifacts
+# ============================================================================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+
+# ============================================================================
+# Node.js Build Artifacts
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+jspm_packages/
+
+# Build output
+dist/
+lib/
+*.tsbuildinfo
+
+# ============================================================================
+# Documentation Build Artifacts
+# ============================================================================
+
+# Doxygen
+docs/html/
+docs/latex/
+docs/xml/
+docs/man/
+docs/rtf/
+doxygen_output/
+html/
+latex/
+
+# Sphinx
+docs/_build/
+doc/_build/
+
+# ============================================================================
+# Linux Kernel Module Build Artifacts
+# ============================================================================
+*.ko
+*.ko.cmd
+*.mod
+*.mod.c
+*.mod.o
+.*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+*.unsigned
+*.order
+*.symvers
+
+# DKMS
+/dkms.conf.tmp
+
+# ============================================================================
+# Windows Driver Build Artifacts
+# ============================================================================
+*.sys
+*.cat
+*.cer
+*.pdb
+*.ilk
+*.exp
+*.bsc
+*.sbr
+*.manifest
+*.res
+*.tlb
+*.tlh
+*.tli
+*.wixobj
+*.wixpdb
+*.msi
+*.msm
+*.msp
+*.cab
+
+# Driver signing
+*.pfx
+!test/*.pfx
+
+# ============================================================================
+# Package Build Artifacts
+# ============================================================================
+*.deb
+*.rpm
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.apk
+*.msi
+*.msix
+*.appx
+*.nupkg
+
+# ============================================================================
+# Test and Coverage Artifacts
+# ============================================================================
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+.nyc_output/
+lcov.info
+
+# ============================================================================
+# Temporary and Backup Files
+# ============================================================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+*.log
+logs/
+tmp/
+temp/
+
+# ============================================================================
+# Security - Never commit these
+# ============================================================================
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+!test/certs/*.crt
+!test/certs/*.cer
+secrets.json
+credentials.json
+.env
+.env.local
+.env.*.local
+
+# ============================================================================
+# Miscellaneous
+# ============================================================================
+*.patch
+*.diff
+.vagrant/
+*.box
+setup-quantacore-sdk.ps1
+
+# Lock files (uncomment if you want to ignore)
+# package-lock.json
+# yarn.lock
+# Cargo.lock
+# poetry.lock

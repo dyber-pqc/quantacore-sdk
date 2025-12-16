@@ -1,0 +1,159 @@
+<UserControl x:Class="QuacTestSuite.Views.AlgorithmCompareView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Controls -->
+        <Border Grid.Row="0" Background="#152232" CornerRadius="12" Padding="20" Margin="0,0,0,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Compare:" Foreground="White" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <ComboBox SelectedIndex="0" Width="200" VerticalAlignment="Center">
+                        <ComboBoxItem Content="All ML-KEM Variants"/>
+                        <ComboBoxItem Content="All ML-DSA Variants"/>
+                        <ComboBoxItem Content="All SLH-DSA Variants"/>
+                        <ComboBoxItem Content="KEM vs Signatures"/>
+                    </ComboBox>
+                    
+                    <TextBlock Text="Metric:" Foreground="White" VerticalAlignment="Center" Margin="24,0,12,0"/>
+                    <ComboBox SelectedIndex="0" Width="150" VerticalAlignment="Center">
+                        <ComboBoxItem Content="Operations/sec"/>
+                        <ComboBoxItem Content="Latency"/>
+                        <ComboBoxItem Content="Key Size"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Column="1" Background="#00D4AA" Foreground="#0A1628" FontWeight="SemiBold" 
+                        Padding="16,10" Height="Auto" MinHeight="44" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ChartBar" Width="18" Height="18"/>
+                        <TextBlock Text="Run Comparison" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Comparison Results -->
+        <Border Grid.Row="1" Background="#152232" CornerRadius="12" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Algorithm Comparison Results" FontSize="16" FontWeight="SemiBold" 
+                           Foreground="White" Margin="0,0,0,16"/>
+
+                <!-- Comparison Table -->
+                <Border Grid.Row="1" Background="#0A1628" CornerRadius="8" Padding="16">
+                    <StackPanel>
+                        <!-- Header -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Algorithm" Foreground="#00B4D8" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="Ops/sec" Foreground="#00B4D8" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="2" Text="Latency (µs)" Foreground="#00B4D8" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="3" Text="Security Level" Foreground="#00B4D8" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <!-- Data Rows -->
+                        <Border Background="#152232" CornerRadius="4" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ML-KEM-512 (Kyber)" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="185,432" Foreground="#2ED573" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="5.4" Foreground="White" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="NIST Level 1" Foreground="#FFB800" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#152232" CornerRadius="4" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ML-KEM-768 (Kyber)" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="142,187" Foreground="#00D4AA" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="7.0" Foreground="White" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="NIST Level 3" Foreground="#00B4D8" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#152232" CornerRadius="4" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ML-KEM-1024 (Kyber)" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="98,654" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="10.1" Foreground="White" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="NIST Level 5" Foreground="#2ED573" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#152232" CornerRadius="4" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ML-DSA-44 (Dilithium)" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="45,231" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="22.1" Foreground="White" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="NIST Level 2" Foreground="#FFB800" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#152232" CornerRadius="4" Padding="12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ML-DSA-65 (Dilithium)" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="32,876" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="30.4" Foreground="White" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="NIST Level 3" Foreground="#00B4D8" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    QUAC 100 HLK Test Playlist - Full Certification
+    
+    This playlist contains all tests required for WHQL certification
+    of the QUAC 100 Windows driver.
+    
+    Copyright (c) 2025 Dyber, Inc. All Rights Reserved.
+-->
+<Playlist Version="1.0" Name="QUAC 100 Full Certification">
+  <TestCategories>
+    <Category Name="Device Fundamentals">
+      <Description>Core device functionality tests required for all drivers</Description>
+    </Category>
+    <Category Name="Security">
+      <Description>Security and cryptographic validation tests</Description>
+    </Category>
+    <Category Name="Power Management">
+      <Description>Power state transition and idle power tests</Description>
+    </Category>
+    <Category Name="PCI">
+      <Description>PCI/PCIe bus and configuration tests</Description>
+    </Category>
+    <Category Name="Performance">
+      <Description>Performance and stress tests</Description>
+    </Category>
+  </TestCategories>
+
+  <Tests>
+    <!-- ================================================================== -->
+    <!-- Device Fundamentals Tests                                          -->
+    <!-- ================================================================== -->
+    
+    <Test Id="DF.Inf" Category="Device Fundamentals">
+      <Name>INF Syntax Check</Name>
+      <Description>Validates INF file syntax and structure</Description>
+      <Duration>5</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="DF.DevFund.PnPDTest" Category="Device Fundamentals">
+      <Name>PnP Device Test</Name>
+      <Description>Tests Plug and Play functionality including device install, 
+                   removal, surprise removal, and re-enumeration</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="DoSimpleIO">true</Parameter>
+        <Parameter Name="DoConcurrentIO">true</Parameter>
+        <Parameter Name="IOPeriod">60</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="DF.DevFund.Reliability" Category="Device Fundamentals">
+      <Name>Device Reliability Test</Name>
+      <Description>Stress tests device reliability with repeated operations</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="TestCycles">1000</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="DF.DevFund.Chaos" Category="Device Fundamentals">
+      <Name>Chaos Test (PnP with I/O)</Name>
+      <Description>Performs PnP operations while I/O is in progress</Description>
+      <Duration>180</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="DF.DevFund.SDEL" Category="Device Fundamentals">
+      <Name>SDEL - Software Device Enumeration Lifetime</Name>
+      <Description>Tests device creation and destruction cycles</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="DF.DevFund.DriverInstall" Category="Device Fundamentals">
+      <Name>Reinstall with IO Before and After</Name>
+      <Description>Tests driver reinstallation with I/O operations</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- Security Tests                                                     -->
+    <!-- ================================================================== -->
+    
+    <Test Id="Sec.DevFund.ATTACK" Category="Security">
+      <Name>Device Path Exerciser Security Test</Name>
+      <Description>Tests security of device I/O interfaces</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="DoPoolCheck">true</Parameter>
+        <Parameter Name="ChangeBufferSize">true</Parameter>
+        <Parameter Name="DoFuzz">true</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="Sec.CodeIntegrity" Category="Security">
+      <Name>Code Integrity Check</Name>
+      <Description>Validates driver code signing and integrity</Description>
+      <Duration>10</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="Sec.HVCI" Category="Security">
+      <Name>HVCI Compatibility</Name>
+      <Description>Tests Hypervisor-protected Code Integrity compatibility</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+
+    <Test Id="Sec.IOCTL.Fuzz" Category="Security">
+      <Name>IOCTL Fuzzing Test</Name>
+      <Description>Fuzzes all IOCTL interfaces for security vulnerabilities</Description>
+      <Duration>300</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="FuzzIterations">10000</Parameter>
+        <Parameter Name="MaxBufferSize">65536</Parameter>
+      </Parameters>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- Power Management Tests                                             -->
+    <!-- ================================================================== -->
+    
+    <Test Id="PM.DevFund.Sleep" Category="Power Management">
+      <Name>Sleep with IO Before and After</Name>
+      <Description>Tests system sleep transitions with I/O</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="SleepStates">S1,S2,S3,S4</Parameter>
+        <Parameter Name="IOBefore">true</Parameter>
+        <Parameter Name="IOAfter">true</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="PM.DevFund.DxState" Category="Power Management">
+      <Name>D-State Transition Test</Name>
+      <Description>Tests device power state transitions (D0-D3)</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="PM.IdlePower" Category="Power Management">
+      <Name>Runtime Idle Power Test</Name>
+      <Description>Tests runtime power management and idle transitions</Description>
+      <Duration>120</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="IdleTimeout">30</Parameter>
+        <Parameter Name="MeasurePower">true</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="PM.ConnectedStandby" Category="Power Management">
+      <Name>Connected Standby Compatibility</Name>
+      <Description>Tests compatibility with Modern Standby</Description>
+      <Duration>180</Duration>
+      <Required>false</Required>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- PCI/PCIe Tests                                                     -->
+    <!-- ================================================================== -->
+    
+    <Test Id="PCI.BusConfig" Category="PCI">
+      <Name>PCI Configuration Space Test</Name>
+      <Description>Validates PCI configuration space settings</Description>
+      <Duration>15</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="PCI.MSIXTest" Category="PCI">
+      <Name>MSI-X Interrupt Test</Name>
+      <Description>Tests MSI-X interrupt configuration and handling</Description>
+      <Duration>30</Duration>
+      <Required>true</Required>
+    </Test>
+    
+    <Test Id="PCI.DMA" Category="PCI">
+      <Name>DMA Verification Test</Name>
+      <Description>Tests DMA operations and buffer handling</Description>
+      <Duration>60</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="TransferSizes">4096,65536,1048576,4194304</Parameter>
+        <Parameter Name="Iterations">100</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="PCI.SRIOV" Category="PCI">
+      <Name>SR-IOV Functionality Test</Name>
+      <Description>Tests SR-IOV virtual function creation and management</Description>
+      <Duration>120</Duration>
+      <Required>false</Required>
+      <Parameters>
+        <Parameter Name="NumVFs">4</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="PCI.LinkSpeed" Category="PCI">
+      <Name>PCIe Link Speed and Width Test</Name>
+      <Description>Validates PCIe link negotiation</Description>
+      <Duration>15</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="MinGen">3</Parameter>
+        <Parameter Name="MinWidth">4</Parameter>
+      </Parameters>
+    </Test>
+
+    <!-- ================================================================== -->
+    <!-- Performance Tests                                                  -->
+    <!-- ================================================================== -->
+    
+    <Test Id="Perf.Stress" Category="Performance">
+      <Name>Stress Test with Verification</Name>
+      <Description>Extended stress test with data verification</Description>
+      <Duration>3600</Duration>
+      <Required>false</Required>
+      <Parameters>
+        <Parameter Name="Duration">3600</Parameter>
+        <Parameter Name="Threads">8</Parameter>
+        <Parameter Name="VerifyData">true</Parameter>
+      </Parameters>
+    </Test>
+    
+    <Test Id="Perf.Concurrent" Category="Performance">
+      <Name>Concurrent I/O Test</Name>
+      <Description>Tests concurrent operations from multiple threads</Description>
+      <Duration>300</Duration>
+      <Required>true</Required>
+      <Parameters>
+        <Parameter Name="Threads">16</Parameter>
+        <Parameter Name="Operations">10000</Parameter>
+      </Parameters>
+    </Test>
+
+    <Test Id="Perf.Throughput" Category="Performance">
+      <Name>Throughput Measurement</Name>
+      <Description>Measures maximum throughput for each operation type</Description>
+      <Duration>300</Duration>
+      <Required>false</Required>
+    </Test>
+
+    <Test Id="Perf.Latency" Category="Performance">
+      <Name>Latency Measurement</Name>
+      <Description>Measures operation latency distribution</Description>
+      <Duration>180</Duration>
+      <Required>false</Required>
+      <Parameters>
+        <Parameter Name="Iterations">10000</Parameter>
+        <Parameter Name="Percentiles">50,90,95,99,99.9</Parameter>
+      </Parameters>
+    </Test>
+
+  </Tests>
+
+  <TestSequence>
+    <Description>Recommended test execution order for certification</Description>
+    <Step Order="1" TestId="DF.Inf" />
+    <Step Order="2" TestId="Sec.CodeIntegrity" />
+    <Step Order="3" TestId="PCI.BusConfig" />
+    <Step Order="4" TestId="PCI.LinkSpeed" />
+    <Step Order="5" TestId="DF.DevFund.DriverInstall" />
+    <Step Order="6" TestId="DF.DevFund.PnPDTest" />
+    <Step Order="7" TestId="PCI.MSIXTest" />
+    <Step Order="8" TestId="PCI.DMA" />
+    <Step Order="9" TestId="PM.DevFund.DxState" />
+    <Step Order="10" TestId="PM.DevFund.Sleep" />
+    <Step Order="11" TestId="PM.IdlePower" />
+    <Step Order="12" TestId="Sec.DevFund.ATTACK" />
+    <Step Order="13" TestId="Sec.IOCTL.Fuzz" />
+    <Step Order="14" TestId="Sec.HVCI" />
+    <Step Order="15" TestId="DF.DevFund.Reliability" />
+    <Step Order="16" TestId="DF.DevFund.Chaos" />
+    <Step Order="17" TestId="Perf.Concurrent" />
+    <Step Order="18" TestId="DF.DevFund.SDEL" />
+  </TestSequence>
+</Playlist>

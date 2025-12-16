@@ -1,0 +1,239 @@
+<UserControl x:Class="QuacTestSuite.Views.FirmwareView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Current Firmware Info -->
+        <Border Grid.Row="0" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,0,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Background="#00D4AA" CornerRadius="12" Width="80" Height="80" Margin="0,0,24,0">
+                        <materialDesign:PackIcon Kind="Chip" Width="40" Height="40" Foreground="#0A1628" 
+                                                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="QUAC 100 Post-Quantum Cryptographic Accelerator" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Border Background="#1A2D42" CornerRadius="4" Padding="8,4" Margin="0,0,12,0">
+                                <TextBlock Text="Firmware v1.0.2" Foreground="#00D4AA" FontSize="12" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#1A2D42" CornerRadius="4" Padding="8,4" Margin="0,0,12,0">
+                                <TextBlock Text="Serial: QC-2025-001234" Foreground="#7F8C9A" FontSize="12"/>
+                            </Border>
+                            <Border Background="#2ED573" CornerRadius="4" Padding="8,4">
+                                <TextBlock Text="Up to Date" Foreground="#0A1628" FontSize="12" FontWeight="Bold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <Button Grid.Column="1" Click="CheckUpdate_Click"
+                        Background="Transparent" BorderBrush="#00D4AA" BorderThickness="1"
+                        Foreground="#00D4AA" Padding="20,12" Height="Auto" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CloudDownload" Width="20" Height="20" VerticalAlignment="Center"/>
+                        <TextBlock Text="Check for Updates" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="380"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Firmware Details -->
+            <Border Grid.Column="0" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,16,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Firmware Details" FontSize="18" FontWeight="Bold" 
+                               Foreground="White" Margin="0,0,0,24"/>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <!-- Version History -->
+                            <TextBlock Text="VERSION HISTORY" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,16"/>
+                            
+                            <!-- v1.0.2 - Current -->
+                            <Border Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,8">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="v1.0.2" FontSize="16" FontWeight="Bold" Foreground="#00D4AA"/>
+                                            <Border Background="#00D4AA" CornerRadius="3" Padding="6,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="CURRENT" FontSize="9" Foreground="#0A1628" FontWeight="Bold"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Text="Dec 10, 2025" Foreground="#5A6C7D" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" Text="• Added SLH-DSA (SPHINCS+) support&#x0a;• Performance improvements for ML-KEM operations&#x0a;• Fixed DMA timeout issue on high-load scenarios&#x0a;• Updated NIST test vectors to latest revision" 
+                                               Foreground="#7F8C9A" FontSize="12" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- v1.0.1 -->
+                            <Border Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,8">
+                                        <TextBlock Text="v1.0.1" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                        <TextBlock Text="Nov 15, 2025" Foreground="#5A6C7D" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" Text="• ML-DSA (Dilithium) signature support&#x0a;• Improved QRNG throughput by 15%&#x0a;• Enhanced diagnostic APIs&#x0a;• Bug fixes for edge cases in batch operations" 
+                                               Foreground="#7F8C9A" FontSize="12" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- v1.0.0 -->
+                            <Border Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,0,0,24">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,8">
+                                        <TextBlock Text="v1.0.0" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                        <TextBlock Text="Oct 1, 2025" Foreground="#5A6C7D" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" Text="• Initial release&#x0a;• ML-KEM (Kyber) key encapsulation support&#x0a;• Hardware Quantum Random Number Generator&#x0a;• PCIe Gen4 x16 interface&#x0a;• DMA-based high-throughput operations" 
+                                               Foreground="#7F8C9A" FontSize="12" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Manual Update -->
+                            <TextBlock Text="MANUAL UPDATE" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,16"/>
+                            
+                            <Border Background="#0A1628" CornerRadius="8" Padding="20" BorderBrush="#2A3F54" BorderThickness="2" 
+                                    Margin="0,0,0,16" AllowDrop="True">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="FileUpload" Width="40" Height="40" Foreground="#5A6C7D" 
+                                                             HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                                    <TextBlock Text="Drag and drop firmware file here" Foreground="#5A6C7D" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="or" Foreground="#3D4F5F" HorizontalAlignment="Center" Margin="0,8"/>
+                                    <Button Click="BrowseFirmware_Click" Background="Transparent" BorderBrush="#5A6C7D" BorderThickness="1"
+                                            Foreground="#7F8C9A" Padding="16,8" Height="Auto" Cursor="Hand">
+                                        <TextBlock Text="Browse Files"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Device Info Panel -->
+            <Border Grid.Column="1" Background="#152232" CornerRadius="12" Padding="24" Margin="16,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="Device Information" FontSize="18" FontWeight="Bold" 
+                               Foreground="White" Margin="0,0,0,24"/>
+
+                    <Border Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="Model" Foreground="#5A6C7D"/>
+                                <TextBlock Text="QUAC 100" Foreground="White" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="Serial Number" Foreground="#5A6C7D"/>
+                                <TextBlock Text="QC-2025-001234" Foreground="White" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="Hardware Rev" Foreground="#5A6C7D"/>
+                                <TextBlock Text="Rev B" Foreground="White" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="PCIe Interface" Foreground="#5A6C7D"/>
+                                <TextBlock Text="Gen4 x16" Foreground="White" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid>
+                                <TextBlock Text="Manufacturing Date" Foreground="#5A6C7D"/>
+                                <TextBlock Text="Sep 2025" Foreground="White" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="CRYPTO ENGINES" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,8,0,16"/>
+
+                    <Border Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Text="ML-KEM Engines" Foreground="#7F8C9A"/>
+                                <TextBlock Text="4" Foreground="#00D4AA" HorizontalAlignment="Right" FontWeight="Bold"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Text="ML-DSA Engines" Foreground="#7F8C9A"/>
+                                <TextBlock Text="2" Foreground="#00D4AA" HorizontalAlignment="Right" FontWeight="Bold"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Text="QRNG Channels" Foreground="#7F8C9A"/>
+                                <TextBlock Text="2" Foreground="#00D4AA" HorizontalAlignment="Right" FontWeight="Bold"/>
+                            </Grid>
+                            <Grid>
+                                <TextBlock Text="DMA Channels" Foreground="#7F8C9A"/>
+                                <TextBlock Text="4" Foreground="#00D4AA" HorizontalAlignment="Right" FontWeight="Bold"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="CERTIFICATIONS" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,8,0,16"/>
+
+                    <StackPanel>
+                        <Border Background="#1A2D42" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <TextBlock Text="FIPS 140-3 Level 2" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="CheckCircle" Foreground="#2ED573" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                        <Border Background="#1A2D42" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <TextBlock Text="Common Criteria EAL4+" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="CheckCircle" Foreground="#2ED573" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                        <Border Background="#1A2D42" CornerRadius="6" Padding="12">
+                            <Grid>
+                                <TextBlock Text="NIST PQC Validation" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="CheckCircle" Foreground="#2ED573" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

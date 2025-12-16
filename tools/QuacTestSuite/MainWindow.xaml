@@ -1,0 +1,302 @@
+<Window x:Class="QuacTestSuite.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="QUAC 100 Test Suite - Dyber, Inc."
+        Height="900" Width="1400"
+        MinHeight="700" MinWidth="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#0A1628">
+
+    <Window.Resources>
+        <!-- Navigation Button Style -->
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A2D42"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Header Outline Button -->
+        <Style x:Key="HeaderOutlineButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#00D4AA"/>
+            <Setter Property="BorderBrush" Value="#00D4AA"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A2D42"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Header Filled Button -->
+        <Style x:Key="HeaderFilledButton" TargetType="Button">
+            <Setter Property="Background" Value="#00D4AA"/>
+            <Setter Property="Foreground" Value="#0A1628"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#00E5B8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Navigation Panel -->
+        <Border Grid.Column="0" Background="#0D1B2A" BorderThickness="0,0,1,0" BorderBrush="#1B3A4B">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Logo and Title -->
+                <StackPanel Grid.Row="0" Margin="20,25,20,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border Grid.Column="0" Width="50" Height="50" CornerRadius="10" 
+                                Background="#00D4AA" Margin="0,0,15,0">
+                            <TextBlock Text="Q" FontSize="28" FontWeight="Bold" 
+                                       Foreground="#0D1B2A" HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="QUAC 100" FontSize="20" FontWeight="Bold" Foreground="#00D4AA" />
+                            <TextBlock Text="Test Suite" FontSize="12" Foreground="#7F8C9A" Margin="0,-2,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Device Status Card -->
+                <Border Grid.Row="1" Margin="15,5,15,15" Padding="15" CornerRadius="10" Background="#152232">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Device Status" FontSize="12" Foreground="#7F8C9A" />
+                            <Ellipse Grid.Column="1" Width="10" Height="10" x:Name="StatusIndicator" Fill="#2ED573" />
+                        </Grid>
+                        <TextBlock x:Name="DeviceStatusText" Text="Connected (Simulator)" FontSize="14" 
+                                   FontWeight="Bold" Foreground="White" Margin="0,5,0,0" />
+                        <TextBlock Text="QUAC 100 PQC Accelerator" FontSize="11" Foreground="#7F8C9A" Margin="0,2,0,0" />
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="TEMP" FontSize="9" Foreground="#5A6C7D" />
+                                <TextBlock x:Name="SidebarTemp" Text="42C" FontSize="16" FontWeight="Bold" Foreground="White" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="POWER" FontSize="9" Foreground="#5A6C7D" />
+                                <TextBlock x:Name="SidebarPower" Text="12.5W" FontSize="16" FontWeight="Bold" Foreground="White" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Navigation Menu -->
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10,0">
+                        
+                        <!-- MAIN Section -->
+                        <TextBlock Text="MAIN" FontSize="10" Foreground="#5A6C7D" Margin="10,10,0,10" FontWeight="Bold" />
+                        
+                        <Button x:Name="BtnDashboard" Click="NavButton_Click" Tag="Dashboard" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Dashboard" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnBenchmark" Click="NavButton_Click" Tag="Benchmark" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Benchmark" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnLoadTest" Click="NavButton_Click" Tag="LoadTest" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Load Testing" FontSize="14"/>
+                        </Button>
+
+                        <!-- CRYPTOGRAPHY Section -->
+                        <TextBlock Text="CRYPTOGRAPHY" FontSize="10" Foreground="#5A6C7D" Margin="10,20,0,10" FontWeight="Bold" />
+
+                        <Button x:Name="BtnKeyManager" Click="NavButton_Click" Tag="KeyManager" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Key Manager" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnCryptoDemo" Click="NavButton_Click" Tag="CryptoDemo" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Encrypt / Decrypt" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnSignVerify" Click="NavButton_Click" Tag="SignVerify" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Sign / Verify" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnCertGen" Click="NavButton_Click" Tag="CertGen" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Certificate Generator" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnHybridCrypto" Click="NavButton_Click" Tag="HybridCrypto" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Hybrid Crypto" FontSize="14"/>
+                        </Button>
+
+                        <!-- TOOLS Section -->
+                        <TextBlock Text="TOOLS" FontSize="10" Foreground="#5A6C7D" Margin="10,20,0,10" FontWeight="Bold" />
+
+                        <Button x:Name="BtnQrng" Click="NavButton_Click" Tag="Qrng" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="QRNG Explorer" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnEntropyAnalyzer" Click="NavButton_Click" Tag="EntropyAnalyzer" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Entropy Analyzer" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnAlgorithmCompare" Click="NavButton_Click" Tag="AlgorithmCompare" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Compare Algorithms" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnBatchOps" Click="NavButton_Click" Tag="BatchOps" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Batch Operations" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnApiPlayground" Click="NavButton_Click" Tag="ApiPlayground" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="API Playground" FontSize="14"/>
+                        </Button>
+
+                        <!-- SYSTEM Section -->
+                        <TextBlock Text="SYSTEM" FontSize="10" Foreground="#5A6C7D" Margin="10,20,0,10" FontWeight="Bold" />
+
+                        <Button x:Name="BtnDiagnostics" Click="NavButton_Click" Tag="Diagnostics" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Health Monitor" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnPerfProfiler" Click="NavButton_Click" Tag="PerfProfiler" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Performance Profiler" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnFirmware" Click="NavButton_Click" Tag="Firmware" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Firmware Manager" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnLogs" Click="NavButton_Click" Tag="Logs" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Log Viewer" FontSize="14"/>
+                        </Button>
+
+                        <Button x:Name="BtnSettings" Click="NavButton_Click" Tag="Settings" Style="{StaticResource NavButtonStyle}">
+                            <TextBlock Text="Settings" FontSize="14"/>
+                        </Button>
+
+                        <Border Height="20"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer -->
+                <Border Grid.Row="3" Padding="15" BorderThickness="0,1,0,0" BorderBrush="#1B3A4B">
+                    <StackPanel>
+                        <TextBlock Text="Dyber, Inc." FontSize="12" FontWeight="Bold" Foreground="#00D4AA" />
+                        <TextBlock Text="dyber.org" FontSize="10" Foreground="#5A6C7D" />
+                        <TextBlock Text="v1.0.0" FontSize="10" Foreground="#5A6C7D" Margin="0,5,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Top Header Bar -->
+            <Border Grid.Row="0" Background="#0D1B2A" Padding="25,15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="PageTitle" Text="Dashboard" FontSize="24" FontWeight="Bold" 
+                               Foreground="White" VerticalAlignment="Center" />
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Click="Refresh_Click" Style="{StaticResource HeaderOutlineButton}" Margin="0,0,10,0">
+                            <TextBlock Text="Refresh"/>
+                        </Button>
+                        
+                        <Button Click="Export_Click" Style="{StaticResource HeaderFilledButton}">
+                            <TextBlock Text="Export"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Page Content -->
+            <Border Grid.Row="1" Background="#0A1628" Padding="25">
+                <ContentControl x:Name="ContentArea" />
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

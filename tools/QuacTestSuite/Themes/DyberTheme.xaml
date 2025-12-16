@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Dyber Brand Colors -->
+    <Color x:Key="DyberPrimaryColor">#00D4AA</Color>
+    <Color x:Key="DyberSecondaryColor">#00B4D8</Color>
+    <Color x:Key="DyberAccentColor">#00F5D4</Color>
+    <Color x:Key="DyberDarkColor">#0A1628</Color>
+    <Color x:Key="DyberSurfaceColor">#152232</Color>
+    <Color x:Key="DyberBackgroundColor">#0D1B2A</Color>
+    
+    <SolidColorBrush x:Key="DyberPrimaryBrush" Color="{StaticResource DyberPrimaryColor}"/>
+    <SolidColorBrush x:Key="DyberSecondaryBrush" Color="{StaticResource DyberSecondaryColor}"/>
+    <SolidColorBrush x:Key="DyberAccentBrush" Color="{StaticResource DyberAccentColor}"/>
+    <SolidColorBrush x:Key="DyberDarkBrush" Color="{StaticResource DyberDarkColor}"/>
+    <SolidColorBrush x:Key="DyberSurfaceBrush" Color="{StaticResource DyberSurfaceColor}"/>
+    <SolidColorBrush x:Key="DyberBackgroundBrush" Color="{StaticResource DyberBackgroundColor}"/>
+    <SolidColorBrush x:Key="DyberSuccessBrush" Color="#2ED573"/>
+    <SolidColorBrush x:Key="DyberWarningBrush" Color="#FFB800"/>
+    <SolidColorBrush x:Key="DyberErrorBrush" Color="#FF4757"/>
+
+</ResourceDictionary>

@@ -1,0 +1,96 @@
+﻿;
+; quac100.inf
+;
+; QUAC 100 Post-Quantum Cryptographic Accelerator Driver
+;
+; Copyright 2025 Dyber, Inc. All Rights Reserved.
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = SecurityDevices
+ClassGuid   = {d94ee5d8-d189-4994-83d2-f68d7d41b0e6}
+Provider    = %ManufacturerName%
+CatalogFile = quac100.cat
+DriverVer   = 01/01/2025,1.0.0.0
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+quac100.sys = 1,,
+
+;*****************************************
+; QUAC 100 Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName% = Standard,NTamd64.10.0...22000,NTarm64.10.0...22000
+
+[Standard.NTamd64.10.0...22000]
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100&SUBSYS_00011DFB
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100&SUBSYS_00021DFB
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100&SUBSYS_00031DFB
+
+[Standard.NTarm64.10.0...22000]
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100
+%DeviceDesc% = Quac100_Device, PCI\VEN_1DFB&DEV_0100&SUBSYS_00011DFB
+
+[Quac100_Device.NT]
+CopyFiles = Quac100_Device.NT.Copy
+AddReg = Quac100_Device.NT.AddReg
+
+[Quac100_Device.NT.Copy]
+quac100.sys
+
+[Quac100_Device.NT.AddReg]
+HKR,,FriendlyName,,%DeviceDesc%
+
+;-------------- Service installation
+[Quac100_Device.NT.Services]
+AddService = quac100,%SPSVCINST_ASSOCSERVICE%, Quac100_Service_Inst
+
+; -------------- quac100 driver install sections
+[Quac100_Service_Inst]
+DisplayName    = %ServiceDesc%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\quac100.sys
+
+;-------------- WDF specific section
+[Quac100_Device.NT.Wdf]
+KmdfService = quac100, Quac100_wdfsect
+
+[Quac100_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+;-------------- Security section
+[Quac100_Device.NT.HW]
+AddReg = Quac100_Device.NT.HW.AddReg
+
+[Quac100_Device.NT.HW.AddReg]
+; Allow access for system and administrators
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)"
+
+;-------------- Device interface section
+[Quac100_Device.NT.Interfaces]
+AddInterface = {F7D5E47A-3B2C-4D8E-9F1A-6C5B4A3D2E1F}, , Quac100_AddInterface
+
+[Quac100_AddInterface]
+AddReg = Quac100_AddInterface.AddReg
+
+[Quac100_AddInterface.AddReg]
+HKR,,FriendlyName,,%DeviceDesc%
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "Dyber, Inc."
+DiskName = "QUAC 100 Installation Disk"
+DeviceDesc = "QUAC 100 Post-Quantum Cryptographic Accelerator"
+ServiceDesc = "QUAC 100 Driver Service"

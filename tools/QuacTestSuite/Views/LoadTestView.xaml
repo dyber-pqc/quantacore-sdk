@@ -1,0 +1,169 @@
+<UserControl x:Class="QuacTestSuite.Views.LoadTestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Configuration Panel -->
+        <Border Grid.Column="0" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,24,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Load Test Configuration" FontSize="18" FontWeight="SemiBold" 
+                               Foreground="White" Margin="0,0,0,24"/>
+
+                    <TextBlock Text="TEST DURATION" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbDuration" SelectedIndex="1" Margin="0,0,0,20">
+                        <ComboBoxItem Content="30 seconds"/>
+                        <ComboBoxItem Content="1 minute"/>
+                        <ComboBoxItem Content="5 minutes"/>
+                        <ComboBoxItem Content="15 minutes"/>
+                        <ComboBoxItem Content="1 hour"/>
+                    </ComboBox>
+
+                    <TextBlock Text="CONCURRENT CONNECTIONS" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <Slider x:Name="SliderConnections" Minimum="1" Maximum="64" Value="8" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="ConnectionCountText" Text="8 connections" Foreground="#808080" FontSize="12" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                    <TextBlock Text="WORKLOAD TYPE" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbWorkload" SelectedIndex="0" Margin="0,0,0,20">
+                        <ComboBoxItem Content="Mixed (KEM + Signatures)"/>
+                        <ComboBoxItem Content="ML-KEM Only"/>
+                        <ComboBoxItem Content="ML-DSA Only"/>
+                        <ComboBoxItem Content="QRNG Only"/>
+                        <ComboBoxItem Content="Stress Test (Max Load)"/>
+                    </ComboBox>
+
+                    <TextBlock Text="RAMP-UP PERIOD" Foreground="#5A6C7D" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbRampUp" SelectedIndex="1" Margin="0,0,0,20">
+                        <ComboBoxItem Content="None (Instant)"/>
+                        <ComboBoxItem Content="10 seconds"/>
+                        <ComboBoxItem Content="30 seconds"/>
+                        <ComboBoxItem Content="1 minute"/>
+                    </ComboBox>
+
+                    <CheckBox x:Name="ChkMonitorTemp" Content="Monitor temperature" IsChecked="True" Foreground="White" Margin="0,0,0,8"/>
+                    <CheckBox x:Name="ChkAutoThrottle" Content="Auto-throttle on overheat" IsChecked="True" Foreground="White" Margin="0,0,0,24"/>
+
+                    <Button x:Name="BtnStart" Click="StartLoadTest_Click" 
+                            Background="#00D4AA" Foreground="#0A1628" FontWeight="SemiBold" 
+                            Padding="20,12" Height="Auto" MinHeight="48" Cursor="Hand" Margin="0,0,0,12">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Play" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Text="Start Load Test" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="BtnStop" Click="StopLoadTest_Click" IsEnabled="False"
+                            Background="Transparent" BorderBrush="#FF4757" BorderThickness="1"
+                            Foreground="#FF4757" Padding="20,12" Height="Auto" MinHeight="48" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Stop" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Text="Stop Test" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Results Panel -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Live Stats -->
+            <WrapPanel Grid.Row="0" Margin="0,0,0,24">
+                <Border Background="#152232" CornerRadius="8" Padding="20" Margin="0,0,16,0" MinWidth="160">
+                    <StackPanel>
+                        <TextBlock Text="CURRENT OPS/SEC" Foreground="#5A6C7D" FontSize="10" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="CurrentOpsText" Text="0" FontSize="28" FontWeight="Bold" Foreground="#00D4AA"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Background="#152232" CornerRadius="8" Padding="20" Margin="0,0,16,0" MinWidth="160">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL OPERATIONS" Foreground="#5A6C7D" FontSize="10" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TotalOpsText" Text="0" FontSize="28" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Background="#152232" CornerRadius="8" Padding="20" Margin="0,0,16,0" MinWidth="160">
+                    <StackPanel>
+                        <TextBlock Text="TEMPERATURE" Foreground="#5A6C7D" FontSize="10" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TempText" Text="--°C" FontSize="28" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Background="#152232" CornerRadius="8" Padding="20" MinWidth="160">
+                    <StackPanel>
+                        <TextBlock Text="ERROR RATE" Foreground="#5A6C7D" FontSize="10" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="ErrorRateText" Text="0.00%" FontSize="28" FontWeight="Bold" Foreground="#2ED573"/>
+                    </StackPanel>
+                </Border>
+            </WrapPanel>
+
+            <!-- Progress -->
+            <Border Grid.Row="1" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,0,24">
+                <StackPanel>
+                    <Grid Margin="0,0,0,12">
+                        <TextBlock x:Name="StatusText" Text="Ready to start load test" FontSize="16" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock x:Name="TimeRemainingText" Text="" HorizontalAlignment="Right" Foreground="#00D4AA" FontWeight="Bold"/>
+                    </Grid>
+                    <ProgressBar x:Name="ProgressBar" Value="0" Maximum="100" Height="8" Background="#1A2D42" Foreground="#00D4AA"/>
+                    <Grid Margin="0,12,0,0">
+                        <TextBlock x:Name="ElapsedText" Text="Elapsed: 00:00" Foreground="#808080"/>
+                        <TextBlock x:Name="RemainingText" Text="" HorizontalAlignment="Right" Foreground="#808080"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Results Log -->
+            <Border Grid.Row="2" Background="#152232" CornerRadius="12" Padding="24">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <TextBlock Text="Test Results Log" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+                        <Button x:Name="BtnExport" Click="ExportResults_Click" HorizontalAlignment="Right" IsEnabled="False"
+                                Background="Transparent" BorderBrush="#00D4AA" BorderThickness="1"
+                                Foreground="#00D4AA" Padding="12,6" Cursor="Hand" Content="Export Report"/>
+                    </Grid>
+                    
+                    <ListBox x:Name="ResultsLog" Grid.Row="1" Background="Transparent" BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Time}" Foreground="#606060" FontSize="12"/>
+                                    <Border Grid.Column="1" Background="{Binding Color}" CornerRadius="3" Padding="8,3" Margin="8,0">
+                                        <TextBlock Text="{Binding Type}" FontSize="10" Foreground="#0A1628" FontWeight="SemiBold"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="2" Text="{Binding Message}" Foreground="#B0B0B0" FontSize="12"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

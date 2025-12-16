@@ -1,0 +1,139 @@
+<UserControl x:Class="QuacTestSuite.Views.LogViewerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Controls Bar -->
+        <Border Grid.Row="0" Background="#152232" CornerRadius="12" Padding="20" Margin="0,0,0,24">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Log Level:" Foreground="White" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <ComboBox x:Name="CmbLogLevel" SelectedIndex="0" Width="120" VerticalAlignment="Center" SelectionChanged="LogLevel_Changed">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="Error"/>
+                        <ComboBoxItem Content="Warning"/>
+                        <ComboBoxItem Content="Info"/>
+                        <ComboBoxItem Content="Debug"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Source:" Foreground="White" VerticalAlignment="Center" Margin="24,0,12,0"/>
+                    <ComboBox x:Name="CmbSource" SelectedIndex="0" Width="150" VerticalAlignment="Center">
+                        <ComboBoxItem Content="All Sources"/>
+                        <ComboBoxItem Content="SDK"/>
+                        <ComboBoxItem Content="Driver"/>
+                        <ComboBoxItem Content="Device"/>
+                        <ComboBoxItem Content="Application"/>
+                    </ComboBox>
+
+                    <TextBox x:Name="TxtSearch" Width="200" materialDesign:HintAssist.Hint="Search logs..." 
+                             Margin="24,0,0,0" VerticalAlignment="Center"/>
+                    
+                    <CheckBox x:Name="ChkAutoScroll" Content="Auto-scroll" IsChecked="True" 
+                              Foreground="White" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Click="Clear_Click" Background="Transparent" BorderBrush="#5A6C7D" BorderThickness="1"
+                            Foreground="#7F8C9A" Padding="12,8" Height="Auto" MinHeight="40" Cursor="Hand" Margin="0,0,12,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="Clear" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Click="Export_Click" Background="Transparent" BorderBrush="#00D4AA" BorderThickness="1"
+                            Foreground="#00D4AA" Padding="12,8" Height="Auto" MinHeight="40" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileExport" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="Export" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Log Content -->
+        <Border Grid.Row="1" Background="#152232" CornerRadius="12" Padding="24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <TextBlock Text="System Logs" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border Background="#FF4757" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="TxtErrorCount" Text="0" Foreground="White" FontWeight="Bold"/>
+                                <TextBlock Text=" Errors" Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#FFB800" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="TxtWarnCount" Text="0" Foreground="#0A1628" FontWeight="Bold"/>
+                                <TextBlock Text=" Warnings" Foreground="#0A1628"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#2ED573" CornerRadius="4" Padding="8,4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="TxtInfoCount" Text="0" Foreground="#0A1628" FontWeight="Bold"/>
+                                <TextBlock Text=" Info" Foreground="#0A1628"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Log List -->
+                <Border Grid.Row="1" Background="#0A1628" CornerRadius="8">
+                    <ListBox x:Name="LogList" Background="Transparent" BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="8,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Timestamp}" Foreground="#5A6C7D" FontFamily="Consolas" FontSize="11"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Level}" Foreground="{Binding LevelColor}" FontWeight="SemiBold" FontSize="11"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Source}" Foreground="#00B4D8" FontSize="11"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Message}" Foreground="White" FontFamily="Consolas" FontSize="11" TextWrapping="NoWrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+                <!-- Status Bar -->
+                <Border Grid.Row="2" Background="#0A1628" CornerRadius="8" Padding="12" Margin="0,16,0,0">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtTotalLogs" Text="0 log entries" Foreground="#5A6C7D"/>
+                            <TextBlock Text=" | " Foreground="#2A3F54"/>
+                            <TextBlock x:Name="TxtLogFile" Text="Log file: quac100.log" Foreground="#5A6C7D"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Ellipse Width="8" Height="8" Fill="#2ED573" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Live logging active" Foreground="#2ED573"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

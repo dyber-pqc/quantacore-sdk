@@ -1,0 +1,168 @@
+<UserControl x:Class="QuacTestSuite.Views.CertGenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Certificate Configuration -->
+        <Border Grid.Column="0" Background="#152232" CornerRadius="12" Padding="24" Margin="0,0,24,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Certificate Configuration" FontSize="18" FontWeight="Bold" 
+                               Foreground="White" Margin="0,0,0,24"/>
+
+                    <!-- Certificate Type -->
+                    <TextBlock Text="CERTIFICATE TYPE" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbCertType" SelectedIndex="0" Margin="0,0,0,20">
+                        <ComboBoxItem Content="Self-Signed Root CA"/>
+                        <ComboBoxItem Content="Intermediate CA"/>
+                        <ComboBoxItem Content="End Entity (Server/Client)"/>
+                        <ComboBoxItem Content="Code Signing"/>
+                    </ComboBox>
+
+                    <!-- Algorithm -->
+                    <TextBlock Text="SIGNATURE ALGORITHM" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
+                    <ComboBox x:Name="CmbAlgorithm" SelectedIndex="1" Margin="0,0,0,20">
+                        <ComboBoxItem Content="ML-DSA-44 (Dilithium-2)"/>
+                        <ComboBoxItem Content="ML-DSA-65 (Dilithium-3)"/>
+                        <ComboBoxItem Content="ML-DSA-87 (Dilithium-5)"/>
+                        <ComboBoxItem Content="Hybrid: ECDSA P-384 + ML-DSA-65"/>
+                        <ComboBoxItem Content="Hybrid: RSA-3072 + ML-DSA-65"/>
+                    </ComboBox>
+
+                    <!-- Subject Information -->
+                    <TextBlock Text="SUBJECT" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
+                    
+                    <TextBlock Text="Common Name (CN)" Foreground="#7F8C9A" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBox x:Name="TxtCN" Text="example.com" Margin="0,0,0,12"/>
+                    
+                    <TextBlock Text="Organization (O)" Foreground="#7F8C9A" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBox x:Name="TxtOrg" Text="Acme Corporation" Margin="0,0,0,12"/>
+                    
+                    <TextBlock Text="Country (C)" Foreground="#7F8C9A" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBox x:Name="TxtCountry" Text="US" Margin="0,0,0,20"/>
+
+                    <!-- Validity -->
+                    <TextBlock Text="VALIDITY" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                            <TextBlock Text="Valid From" Foreground="#7F8C9A" FontSize="11" Margin="0,0,0,4"/>
+                            <DatePicker x:Name="DpFrom"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                            <TextBlock Text="Days Valid" Foreground="#7F8C9A" FontSize="11" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="CmbValidity" SelectedIndex="2">
+                                <ComboBoxItem Content="30 days"/>
+                                <ComboBoxItem Content="365 days"/>
+                                <ComboBoxItem Content="730 days (2 years)"/>
+                                <ComboBoxItem Content="3650 days (10 years)"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Key Usage -->
+                    <TextBlock Text="KEY USAGE" Foreground="#5A6C7D" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
+                    <CheckBox Content="Digital Signature" IsChecked="True" Foreground="White" Margin="0,0,0,8"/>
+                    <CheckBox Content="Key Encipherment" IsChecked="True" Foreground="White" Margin="0,0,0,8"/>
+                    <CheckBox Content="Certificate Signing" Foreground="White" Margin="0,0,0,8"/>
+                    <CheckBox Content="CRL Signing" Foreground="White" Margin="0,0,0,20"/>
+
+                    <!-- Generate Button -->
+                    <Button x:Name="BtnGenerate" Click="Generate_Click"
+                            Background="#00D4AA" Foreground="#0A1628" FontWeight="Bold" 
+                            Padding="20,12" Height="Auto" MinHeight="48" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Certificate" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Text="Generate Certificate" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Certificate Preview -->
+        <Border Grid.Column="1" Background="#152232" CornerRadius="12" Padding="24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Text="Certificate Preview" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="CopyCert_Click" Background="Transparent" BorderBrush="#5A6C7D" BorderThickness="1"
+                                Foreground="#7F8C9A" Padding="12,8" Height="Auto" MinHeight="36" Cursor="Hand" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentCopy" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Copy" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Click="SaveCert_Click" Background="Transparent" BorderBrush="#00D4AA" BorderThickness="1"
+                                Foreground="#00D4AA" Padding="12,8" Height="Auto" MinHeight="36" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSave" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Export" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Border Grid.Row="1" Background="#0A1628" CornerRadius="8" Padding="16">
+                    <TextBox x:Name="TxtCertificate"
+                             Text="// Certificate will appear here after generation..."
+                             Background="Transparent" BorderThickness="0"
+                             Foreground="#00D4AA" FontFamily="Consolas" FontSize="12"
+                             AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True"
+                             VerticalScrollBarVisibility="Auto"/>
+                </Border>
+
+                <!-- Certificate Info -->
+                <Border Grid.Row="2" Background="#0A1628" CornerRadius="8" Padding="16" Margin="0,16,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="FORMAT" Foreground="#5A6C7D" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtFormat" Text="PEM" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="CERTIFICATE SIZE" Foreground="#5A6C7D" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtCertSize" Text="--" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="PUBLIC KEY SIZE" Foreground="#5A6C7D" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtPubKeySize" Text="--" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="SIGNATURE SIZE" Foreground="#5A6C7D" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtSigSize" Text="--" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
